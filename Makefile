@@ -6,7 +6,7 @@
 #    By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 12:54:42 by ele-cren          #+#    #+#              #
-#    Updated: 2017/04/20 14:39:41 by ele-cren         ###   ########.fr        #
+#    Updated: 2017/04/21 14:54:38 by ele-cren         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,8 @@ SRC = src/calc.c src/main.c src/draw.c src/check.c src/error.c src/event.c \
 
 OBJ = $(patsubst src/%.c, obj/%.o, $(SRC))
 
-FLAGS = -I /tmp/SDL2/ttf/include/SDL2 -I ./SDL2/SDL2/include -I ./libft/include\
-		-I ./include
+FLAGS = -Wall -Wextra -Werror -I /tmp/SDL2/ttf/include/SDL2 \
+		-I ./SDL2/SDL2/include -I ./libft/include -I ./include
 
 SDLFLAGS = `sdl2-config --cflags --libs`
 

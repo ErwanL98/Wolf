@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 11:04:57 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/04/20 17:19:18 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/04/21 14:34:53 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,17 @@ void	ft_game(t_sdl *sdl, char *map, int select)
 	while (sdl->keep_game == 1)
 	{
 		ft_event(sdl);
-		if (sdl->key[SDL_SCANCODE_ESCAPE])
-			sdl->keep_game = 0;
+		def.m_speed = 0.075;
 		ft_is_key(sdl, &def);
 		def.o_time = def.time;
 		def.time = SDL_GetTicks();
 		def.frame_time = (def.time - def.o_time) / 1000;
-		def.m_speed = def.frame_time * 3.0;
-		def.r_speed = def.frame_time * 70.0;
 		ft_aff(sdl, def);
+		SDL_Delay(16);
 	}
 	sdl->key[SDL_SCANCODE_ESCAPE] = 0;
 	SDL_RenderClear(sdl->render);
 	ft_inttabdel(&def.tab);
 	SDL_DestroyTexture(sdl->map);
+	SDL_DestroyTexture(sdl->wall);
 }

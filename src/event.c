@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/31 15:36:03 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/04/20 17:16:41 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/04/21 14:25:14 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	ft_event(t_sdl *sdl)
 
 void	ft_is_key(t_sdl *sdl, t_def *def)
 {
+	if (sdl->key[SDL_SCANCODE_LSHIFT])
+		def->m_speed *= 1.5;
 	if (sdl->key[SDL_SCANCODE_W])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x + def->dir_x * \
@@ -94,4 +96,6 @@ void	ft_is_key2(t_sdl *sdl, t_def *def)
 								def->m_speed)][(int)def->pos_x] == 0)
 			def->pos_y += def->plane_y * def->m_speed;
 	}
+	if (sdl->key[SDL_SCANCODE_ESCAPE])
+		sdl->keep_game = 0;
 }

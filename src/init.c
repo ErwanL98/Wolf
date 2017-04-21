@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 14:33:06 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/04/20 16:24:37 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/04/21 15:09:29 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,15 @@ void	ft_init_all(t_def *def, t_sdl *sdl, t_parse *parse,  char *av)
 	sdl->posmap.w = def->map_w;
 	sdl->posmap.h = def->map_h;
 	if ((sdl->map = SDL_CreateTexture(sdl->render, SDL_PIXELFORMAT_RGBA8888, \
-					SDL_TEXTUREACCESS_STREAMING, def->map_w, def->map_h)) \
-			== NULL)
+				SDL_TEXTUREACCESS_STREAMING, def->map_w, def->map_h)) == NULL)
 		ft_sdl_error();
+	if ((sdl->tmp_wall = SDL_LoadBMP("./img/wall.bmp")) == NULL)
+		ft_sdl_error();
+	if ((sdl->wall = SDL_CreateTextureFromSurface(sdl->render, \
+					sdl->tmp_wall)) == NULL)
+		ft_sdl_error();
+	SDL_FreeSurface(sdl->tmp_wall);
+	def->r_speed = 2.5;
 }
 
 void	ft_init_color(t_sdl *sdl)

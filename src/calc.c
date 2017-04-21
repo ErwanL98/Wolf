@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/31 11:15:54 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/04/19 15:40:13 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/04/21 15:11:36 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,46 +65,16 @@ void	ft_loop(t_def def, t_sdl *sdl)
 {
 	int		x;
 	t_calc	calc;
-	double	dist;
-
 
 	x = -1;
-	if (ft_line(def, &calc, 0) >= HEIGHT && ft_line(def, &calc, WIDTH / 2) \
-			>= HEIGHT && ft_line(def, &calc, WIDTH) >= HEIGHT && \
-												(calc.side == calc.test))
+	while (++x < WIDTH)
 	{
-		SDL_SetRenderDrawColor(sdl->render, 160, 160, 160, 255);
-		if (calc.side == 1)
-			SDL_SetRenderDrawColor(sdl->render, 128, 128, 128, 255);
-		SDL_RenderClear(sdl->render);
-		SDL_Delay(50);
+		calc.camera_x = 2 * x / (double)WIDTH - 1;
+		calc.ray_pos_x = def.pos_x;
+		calc.ray_pos_y = def.pos_y;
+		calc.ray_dir_x = def.dir_x + def.plane_x * calc.camera_x;
+		calc.ray_dir_y = def.dir_y + def.plane_y * calc.camera_x;
+		ft_check_wall(def, &calc);
+		ft_draw(x, calc, sdl);
 	}
-	else
-	{
-		while (++x < WIDTH)
-		{
-			calc.camera_x = 2 * x / (double)WIDTH - 1;
-			calc.ray_pos_x = def.pos_x;
-			calc.ray_pos_y = def.pos_y;
-			calc.ray_dir_x = def.dir_x + def.plane_x * calc.camera_x;
-			calc.ray_dir_y = def.dir_y + def.plane_y * calc.camera_x;
-			ft_check_wall(def, &calc);
-			ft_draw(def, x, calc, sdl);
-		}
-	}
-}
-
-int		ft_line(t_def def, t_calc *calc, int x)
-{
-	int		line_height;
-
-	calc->camera_x = 2 * x / (double)WIDTH - 1;
-	calc->ray_pos_x = def.pos_x;
-	calc->ray_pos_y = def.pos_y;
-	calc->ray_dir_x = def.dir_x + def.plane_x * calc->camera_x;
-	calc->ray_dir_y = def.dir_y + def.plane_y * calc->camera_x;
-	ft_check_wall(def, calc);
-	calc->test = (x == 0) ? calc->side : calc->test;
-	line_height = (int)HEIGHT / calc->wall_dist;
-	return (line_height);
 }

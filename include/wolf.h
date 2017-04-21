@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 11:03:15 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/04/20 16:21:51 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/04/21 14:55:42 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,14 @@ typedef struct		s_sdl
 	SDL_Event		event_game;
 	SDL_Event		event_menu;
 	SDL_Renderer	*render;
-	SDL_Texture		*map;
-	SDL_Texture		*saf;
 	SDL_PixelFormat	*format;
-	Uint32			*pixels;
-	SDL_Rect		posmap;
 	SDL_Texture		*menu[3];
+	SDL_Texture		*saf;
+	SDL_Texture		*map;
+	SDL_Texture		*wall;
+	Uint32			*pixels;
 	SDL_Surface		*tmp_menu;
+	SDL_Surface		*tmp_wall;
 	TTF_Font		*font;
 	SDL_Color		color[2];
 	void			*tmp;
@@ -108,6 +109,9 @@ typedef struct		s_sdl
 	int				keep_game;
 	int				key[SDL_NUM_SCANCODES];
 	SDL_Rect		postext;
+	SDL_Rect		posmap;
+	SDL_Rect		src;
+	SDL_Rect		dest;
 }					t_sdl;
 
 int					**ft_create_map(char *av, t_parse parse);
@@ -122,12 +126,11 @@ void				ft_loop(t_def def, t_sdl *sdl);
 void				ft_init_calc(t_calc *calc);
 void				ft_check_wall(t_def def, t_calc *calc);
 void				ft_set(t_calc *calc);
-void				ft_draw(t_def def, int x, t_calc calc, t_sdl *sdl);
+void				ft_draw(int x, t_calc calc, t_sdl *sdl);
 void				ft_is_key(t_sdl *sdl, t_def *def);
 void				ft_is_key2(t_sdl *sdl, t_def *def);
 void				ft_init_sdl(t_sdl *sdl);
 void				ft_event(t_sdl *sdl);
-int					ft_line(t_def def, t_calc *calc, int x);
 void				ft_draw_minimap(t_sdl *sdl, t_def def);
 void				ft_init_all(t_def *def, t_sdl *sdl, t_parse *parse, \
 																	char *av);

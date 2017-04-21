@@ -6,26 +6,34 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/29 14:33:20 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/04/20 17:01:50 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/04/21 14:56:28 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <wolf.h>
 
-void	ft_draw(t_def def, int x, t_calc calc, t_sdl *sdl)
+void	ft_draw(int x, t_calc calc, t_sdl *sdl)
 {
 	t_draw	draw;
+	double		wall_x;
 
+	if (calc.side == 0)
+		wall_x = calc.ray_pos_y + calc.wall_dist * calc.ray_dir_y;
+	else
+		wall_x = calc.ray_pos_x + calc.wall_dist * calc.ray_dir_x;
+	wall_x = wall_x - (int)wall_x;
+	SDL_QueryTexture(sdl->wall, NULL, NULL, &sdl->src.w, &sdl->src.h);
+	sdl->src.x = wall_x * sdl->src.w;
+	sdl->src.w = 1;
+	sdl->src.y = 0;
 	draw.line_height = (int)HEIGHT / calc.wall_dist;
 	draw.draw_s = -draw.line_height / 2 + HEIGHT / 2;
-	draw.draw_s = (draw.draw_s < 0) ? 0 : draw.draw_s;
 	draw.draw_e = draw.line_height / 2 + HEIGHT / 2;
-	draw.draw_e = (draw.draw_e >= HEIGHT) ? HEIGHT - 1 : draw.draw_e;
-	SDL_SetRenderDrawColor(sdl->render, 160, 160, 160, 255);
-	if (calc.side == 1)
-		SDL_SetRenderDrawColor(sdl->render, 128, 128, 128, 255);
-	while (draw.draw_s < draw.draw_e)
-		SDL_RenderDrawPoint(sdl->render, x, draw.draw_s++);
+	sdl->dest.x = x;
+	sdl->dest.h = draw.draw_e - draw.draw_s;
+	sdl->dest.y = draw.draw_s;
+	sdl->dest.w = 1;
+	SDL_RenderCopy(sdl->render, sdl->wall, &sdl->src, &sdl->dest);
 }
 
 void	ft_draw_minimap(t_sdl *sdl, t_def def)
