@@ -6,7 +6,7 @@
 #    By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 12:54:42 by ele-cren          #+#    #+#              #
-#    Updated: 2017/04/25 15:37:04 by ele-cren         ###   ########.fr        #
+#    Updated: 2017/04/25 15:44:28 by ele-cren         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRC = src/calc.c src/main.c src/draw.c src/check.c src/error.c src/event.c \
 OBJ = $(patsubst src/%.c, obj/%.o, $(SRC))
 
 FLAGS = -Wall -Wextra -Werror -I /tmp/SDL2/SDL2_ttf/include/SDL2 \
-		-I/tmp/SDL2/SDL2/include  -I ./libft/include -I ./include
+		-I ./SDL2/SDL2/include  -I ./libft/include -I ./include
 
 LIBS = -L./libft -lft -L/tmp/SDL2/SDL2_ttf/lib -lSDL2_ttf -L/tmp/SDL2/SDL2/lib \
 	   -lSDL2 -lSDL2main
@@ -41,7 +41,7 @@ obj/%.o : src/%.c
 		./configure --prefix=/tmp/SDL2/freetype ; make install ; cd -)
 	test -e /tmp/SDL2/SDL2_ttf || (cd SDL2/SDL2_ttf ; \
 		./configure --with-sdl-prefix=/tmp/SDL2/SDL2 \
-		--with-sdl-prefix=/tmp/SDL2/freetype --prefix=/tmp/SDL2/SDL2_ttf ; \
+		--with-freetype-prefix=/tmp/SDL2/freetype --prefix=/tmp/SDL2/SDL2_ttf ; \
 		make install ; cd -)
 	mkdir -p obj
 	$(CC) $(FLAGS) -c $< -o $@
