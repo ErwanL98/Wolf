@@ -6,7 +6,7 @@
 #    By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 12:54:42 by ele-cren          #+#    #+#              #
-#    Updated: 2017/04/21 14:54:38 by ele-cren         ###   ########.fr        #
+#    Updated: 2017/04/25 14:31:58 by ele-cren         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,12 +37,15 @@ $(NAME) : $(OBJ)
 	echo "\033[32m[✔] \033[0mWolf3d"
 
 obj/%.o : src/%.c
+	test -e /tmp/SDL2/SDL2 || (cd SDL2/SDL2 ; \
+		./configure --prefix=/tmp/SDL2/SDL2 ; make install ; cd -)
 	test -e ./SDL2/SDL2/build || (cd SDL2/SDL2 ; ./configure ; make -j4 ; cd -)
 	test -e /tmp/SDL2/freetype || (cd SDL2/freetype ; \
 		./configure --prefix=/tmp/SDL2/freetype ; make install ; cd -)
 	test -e /tmp/SDL2/ttf || (cd SDL2/SDL2_ttf ; \
 		./configure --with-freetype-prefix=/tmp/SDL2/freetype \
-		--prefix=/tmp/SDL2/ttf ; make install ; cd -)
+		--with-sdl-prefix=/tmp/SDL2/SDL2 --prefix=/tmp/SDL2/ttf ; \
+		make install ; cd -)
 	mkdir -p obj
 	$(CC) $(FLAGS) -c $< -o $@
 	echo "\033[32m[✔] \033[0m$@"
