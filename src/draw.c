@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/29 14:33:20 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/04/21 14:56:28 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/04/25 12:12:08 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	ft_draw(int x, t_calc calc, t_sdl *sdl)
 	sdl->src.w = 1;
 	sdl->src.y = 0;
 	draw.line_height = (int)HEIGHT / calc.wall_dist;
-	draw.draw_s = -draw.line_height / 2 + HEIGHT / 2;
-	draw.draw_e = draw.line_height / 2 + HEIGHT / 2;
+	draw.draw_s = -draw.line_height / 2 + HEIGHT / 2 + sdl->y;
+	draw.draw_e = draw.line_height / 2 + HEIGHT / 2 + sdl->y;
 	sdl->dest.x = x;
 	sdl->dest.h = draw.draw_e - draw.draw_s;
 	sdl->dest.y = draw.draw_s;
@@ -72,21 +72,24 @@ void	ft_draw_saf(t_sdl *sdl)
 
 	y = -1;
 	color = SDL_MapRGBA(sdl->format, 101, 217, 240, 255);
-	SDL_LockTexture(sdl->saf, NULL, &sdl->tmp, &sdl->pitch);
+	SDL_LockTexture(sdl->t_sky, NULL, &sdl->tmp, &sdl->pitch);
 	sdl->pixels = sdl->tmp;
-	while (++y < HEIGHT / 2)
-	{
-		x = -1;
-		while (++x < WIDTH)
-			sdl->pixels[x + (y * WIDTH)] = color;
-	}
-	y--;
-	color = SDL_MapRGBA(sdl->format, 64, 64, 64, 255);
 	while (++y < HEIGHT)
 	{
 		x = -1;
 		while (++x < WIDTH)
 			sdl->pixels[x + (y * WIDTH)] = color;
 	}
-	SDL_UnlockTexture(sdl->saf);
+	SDL_UnlockTexture(sdl->t_sky);
+	y = -1;
+	color = SDL_MapRGBA(sdl->format, 64, 64, 64, 255);
+	SDL_LockTexture(sdl->t_floor, NULL, &sdl->tmp, &sdl->pitch);
+	sdl->pixels = sdl->tmp;
+	while (++y < HEIGHT * 2)
+	{
+		x = -1;
+		while (++x < WIDTH)
+			sdl->pixels[x + (y * WIDTH)] = color;
+	}
+	SDL_UnlockTexture(sdl->t_floor);
 }

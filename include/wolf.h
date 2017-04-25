@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 11:03:15 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/04/21 14:55:42 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/04/25 12:11:45 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ typedef struct		s_sdl
 	SDL_Renderer	*render;
 	SDL_PixelFormat	*format;
 	SDL_Texture		*menu[3];
-	SDL_Texture		*saf;
+	SDL_Texture		*t_sky;
+	SDL_Texture		*t_floor;
 	SDL_Texture		*map;
 	SDL_Texture		*wall;
 	Uint32			*pixels;
@@ -108,6 +109,8 @@ typedef struct		s_sdl
 	int				keep_menu;
 	int				keep_game;
 	int				key[SDL_NUM_SCANCODES];
+	int				y;
+	SDL_Rect		floor;
 	SDL_Rect		postext;
 	SDL_Rect		posmap;
 	SDL_Rect		src;
@@ -146,5 +149,6 @@ void				ft_init_1(t_def *def);
 void				ft_init_2(t_def *def);
 void				ft_free(t_sdl *sdl);
 void				ft_key_menu(t_sdl *sdl, int *select);
+void				ft_init_textures(t_sdl *sdl);
 
 #endif

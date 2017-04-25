@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/31 15:36:03 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/04/21 14:25:14 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/04/25 12:14:13 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,10 @@ void	ft_is_key2(t_sdl *sdl, t_def *def)
 								def->m_speed)][(int)def->pos_x] == 0)
 			def->pos_y += def->plane_y * def->m_speed;
 	}
+	if (sdl->key[SDL_SCANCODE_UP] && sdl->y <= 373)
+		sdl->y += 20;
+	if (sdl->key[SDL_SCANCODE_DOWN] && sdl->y >= -600)
+		sdl->y -= 20;
 	if (sdl->key[SDL_SCANCODE_ESCAPE])
 		sdl->keep_game = 0;
 }
