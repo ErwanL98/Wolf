@@ -6,7 +6,7 @@
 #    By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 12:54:42 by ele-cren          #+#    #+#              #
-#    Updated: 2017/04/25 14:41:31 by ele-cren         ###   ########.fr        #
+#    Updated: 2017/04/25 15:07:14 by ele-cren         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,8 @@ OBJ = $(patsubst src/%.c, obj/%.o, $(SRC))
 FLAGS = -Wall -Wextra -Werror -I /tmp/SDL2/ttf/include/SDL2 \
 		-I ./SDL2/SDL2/include -I ./libft/include -I ./include
 
+SDLFLAGS = `sdl2-config --libs`
+
 LIBS = -L./libft -lft -L/tmp/SDL2/ttf/lib -lSDL2_ttf -L/tmp/SDL2/SDL2/lib \
 	   -lSDL2 -lSDL2main
 
@@ -31,7 +33,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJ)
 	make -C libft/
-	$(CC) $(OBJ) -o $(NAME) $(LIBS) $(SDLLIBS)
+	$(CC) $(OBJ) -o $(NAME) $(LIBS) $(SDLFLAGS) $(SDLLIBS)
 	echo "\033[32m[✔] \033[0mWolf3d"
 
 obj/%.o : src/%.c
@@ -42,7 +44,7 @@ obj/%.o : src/%.c
 		./configure --prefix=/tmp/SDL2/freetype ; make install ; cd -)
 	test -e /tmp/SDL2/ttf || (cd SDL2/SDL2_ttf ; \
 		./configure --with-freetype-prefix=/tmp/SDL2/freetype \
-		--with-sdl-prefix=/tmp/SDL2/SDL2 --prefix=/tmp/SDL2/ttf ; \
+		--with-sdl-prefix=/tmp/SDL2/SDL2 --prefix=/tmp/SDL2/SDL2_ttf ; \
 		make install ; cd -)
 	mkdir -p obj
 	$(CC) $(FLAGS) -c $< -o $@
