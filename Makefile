@@ -6,7 +6,7 @@
 #    By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 12:54:42 by ele-cren          #+#    #+#              #
-#    Updated: 2017/04/25 14:31:58 by ele-cren         ###   ########.fr        #
+#    Updated: 2017/04/25 14:41:31 by ele-cren         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,7 @@ OBJ = $(patsubst src/%.c, obj/%.o, $(SRC))
 FLAGS = -Wall -Wextra -Werror -I /tmp/SDL2/ttf/include/SDL2 \
 		-I ./SDL2/SDL2/include -I ./libft/include -I ./include
 
-SDLFLAGS = `sdl2-config --cflags --libs`
-
-LIBS = -L./libft -lft -L/tmp/SDL2/ttf/lib -lSDL2_ttf -L./SDL2/SDL2/build \
+LIBS = -L./libft -lft -L/tmp/SDL2/ttf/lib -lSDL2_ttf -L/tmp/SDL2/SDL2/lib \
 	   -lSDL2 -lSDL2main
 
 .SILENT :
@@ -33,7 +31,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJ)
 	make -C libft/
-	$(CC) $(OBJ) -o $(NAME) $(LIBS) $(SDLFLAGS) $(SDLLIBS)
+	$(CC) $(OBJ) -o $(NAME) $(LIBS) $(SDLLIBS)
 	echo "\033[32m[✔] \033[0mWolf3d"
 
 obj/%.o : src/%.c
