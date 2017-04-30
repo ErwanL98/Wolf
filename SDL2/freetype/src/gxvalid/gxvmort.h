@@ -4,8 +4,7 @@
 /*                                                                         */
 /*    TrueTypeGX/AAT common definition for mort table (specification).     */
 /*                                                                         */
-/*  Copyright 2004-2016 by                                                 */
-/*  suzuki toshiya, Masatake YAMATO, Red Hat K.K.,                         */
+/*  Copyright 2004, 2005 by suzuki toshiya, Masatake YAMATO, Red Hat K.K., */
 /*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
 /*                                                                         */
 /*  This file is part of the FreeType project, and may only be used,       */
@@ -25,8 +24,8 @@
 /***************************************************************************/
 
 
-#ifndef GXVMORT_H_
-#define GXVMORT_H_
+#ifndef __GXVMORT_H__
+#define __GXVMORT_H__
 
 #include "gxvalid.h"
 #include "gxvcommn.h"
@@ -56,39 +55,39 @@
   gxv_mort_featurearray_validate( FT_Bytes       table,
                                   FT_Bytes       limit,
                                   FT_ULong       nFeatureFlags,
-                                  GXV_Validator  gxvalid );
+                                  GXV_Validator  valid );
 
   FT_LOCAL( void )
   gxv_mort_coverage_validate( FT_UShort      coverage,
-                              GXV_Validator  gxvalid );
+                              GXV_Validator  valid );
 
   FT_LOCAL( void )
   gxv_mort_subtable_type0_validate( FT_Bytes       table,
                                     FT_Bytes       limit,
-                                    GXV_Validator  gxvalid );
+                                    GXV_Validator  valid );
 
   FT_LOCAL( void )
   gxv_mort_subtable_type1_validate( FT_Bytes       table,
                                     FT_Bytes       limit,
-                                    GXV_Validator  gxvalid );
+                                    GXV_Validator  valid );
 
   FT_LOCAL( void )
   gxv_mort_subtable_type2_validate( FT_Bytes       table,
                                     FT_Bytes       limit,
-                                    GXV_Validator  gxvalid );
+                                    GXV_Validator  valid );
 
   FT_LOCAL( void )
   gxv_mort_subtable_type4_validate( FT_Bytes       table,
                                     FT_Bytes       limit,
-                                    GXV_Validator  gxvalid );
+                                    GXV_Validator  valid );
 
   FT_LOCAL( void )
   gxv_mort_subtable_type5_validate( FT_Bytes       table,
                                     FT_Bytes       limit,
-                                    GXV_Validator  gxvalid );
+                                    GXV_Validator  valid );
 
 
-#endif /* GXVMORT_H_ */
+#endif /* __GXVMORT_H__ */
 
 
 /* END */

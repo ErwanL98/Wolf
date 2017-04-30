@@ -4,7 +4,7 @@
 /*                                                                         */
 /*    FreeType PFR glyph loader (body).                                    */
 /*                                                                         */
-/*  Copyright 2002-2016 by                                                 */
+/*  Copyright 2002, 2003, 2005, 2007, 2010 by                              */
 /*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
 /*                                                                         */
 /*  This file is part of the FreeType project, and may only be used,       */
@@ -92,8 +92,8 @@
     if ( outline->n_contours > 0 )
       first = outline->contours[outline->n_contours - 1];
 
-    /* if the last point falls on the same location as the first one */
-    /* we need to delete it                                          */
+    /* if the last point falls on the same location than the first one */
+    /* we need to delete it                                            */
     if ( last > first )
     {
       FT_Vector*  p1 = outline->points + first;
@@ -135,7 +135,7 @@
     /* check that we have begun a new path */
     if ( !glyph->path_begun )
     {
-      error = FT_THROW( Invalid_Table );
+      error = PFR_Err_Invalid_Table;
       FT_ERROR(( "pfr_glyph_line_to: invalid glyph data\n" ));
       goto Exit;
     }
@@ -143,7 +143,7 @@
     error = FT_GLYPHLOADER_CHECK_POINTS( loader, 1, 0 );
     if ( !error )
     {
-      FT_Int  n = outline->n_points;
+      FT_UInt  n = outline->n_points;
 
 
       outline->points[n] = *to;
@@ -171,7 +171,7 @@
     /* check that we have begun a new path */
     if ( !glyph->path_begun )
     {
-      error = FT_THROW( Invalid_Table );
+      error = PFR_Err_Invalid_Table;
       FT_ERROR(( "pfr_glyph_line_to: invalid glyph data\n" ));
       goto Exit;
     }
@@ -215,10 +215,8 @@
     /* check that there is space for a new contour and a new point */
     error = FT_GLYPHLOADER_CHECK_POINTS( loader, 1, 1 );
     if ( !error )
-    {
       /* add new start point */
       error = pfr_glyph_line_to( glyph, to );
-    }
 
     return error;
   }
@@ -250,7 +248,7 @@
                          FT_Byte*   p,
                          FT_Byte*   limit )
   {
-    FT_Error   error  = FT_Err_Ok;
+    FT_Error   error  = PFR_Err_Ok;
     FT_Memory  memory = glyph->loader->memory;
     FT_UInt    flags, x_count, y_count, i, count, mask;
     FT_Int     x;
@@ -306,8 +304,8 @@
 
     glyph->y_control = glyph->x_control + x_count;
 
-    mask = 0;
-    x    = 0;
+    mask  = 0;
+    x     = 0;
 
     for ( i = 0; i < count; i++ )
     {
@@ -333,10 +331,10 @@
       mask >>= 1;
     }
 
-    /* XXX: we ignore the secondary stroke and edge definitions */
-    /*      since we don't support native PFR hinting           */
-    /*                                                          */
-    if ( flags & PFR_GLYPH_SINGLE_EXTRA_ITEMS )
+    /* XXX: for now we ignore the secondary stroke and edge definitions */
+    /*      since we don't want to support native PFR hinting           */
+    /*                                                                  */
+    if ( flags & PFR_GLYPH_EXTRA_ITEMS )
     {
       error = pfr_extra_items_skip( &p, limit );
       if ( error )
@@ -368,27 +366,27 @@
 
         switch ( format >> 4 )
         {
-        case 0:                                               /* end glyph */
+        case 0:                             /* end glyph */
           FT_TRACE6(( "- end glyph" ));
           args_count = 0;
           break;
 
-        case 1:                                  /* general line operation */
+        case 1:                             /* general line operation */
           FT_TRACE6(( "- general line" ));
           goto Line1;
 
-        case 4:                                 /* move to inside contour  */
+        case 4:                             /* move to inside contour  */
           FT_TRACE6(( "- move to inside" ));
           goto Line1;
 
-        case 5:                                 /* move to outside contour */
+        case 5:                             /* move to outside contour */
           FT_TRACE6(( "- move to outside" ));
         Line1:
           args_format = format_low;
           args_count  = 1;
           break;
 
-        case 2:                                      /* horizontal line to */
+        case 2:                             /* horizontal line to */
           FT_TRACE6(( "- horizontal line to cx.%d", format_low ));
           if ( format_low >= x_count )
             goto Failure;
@@ -398,7 +396,7 @@
           args_count = 0;
           break;
 
-        case 3:                                        /* vertical line to */
+        case 3:                             /* vertical line to */
           FT_TRACE6(( "- vertical line to cy.%d", format_low ));
           if ( format_low >= y_count )
             goto Failure;
@@ -408,19 +406,19 @@
           args_count = 0;
           break;
 
-        case 6:                            /* horizontal to vertical curve */
+        case 6:                             /* horizontal to vertical curve */
           FT_TRACE6(( "- hv curve " ));
           args_format = 0xB8E;
           args_count  = 3;
           break;
 
-        case 7:                            /* vertical to horizontal curve */
+        case 7:                             /* vertical to horizontal curve */
           FT_TRACE6(( "- vh curve" ));
           args_format = 0xE2B;
           args_count  = 3;
           break;
 
-        default:                                       /* general curve to */
+        default:                            /* general curve to */
           FT_TRACE6(( "- general curve" ));
           args_count  = 4;
           args_format = format_low;
@@ -441,14 +439,14 @@
           {
           case 0:                           /* 8-bit index */
             PFR_CHECK( 1 );
-            idx = PFR_NEXT_BYTE( p );
+            idx  = PFR_NEXT_BYTE( p );
             if ( idx >= x_count )
               goto Failure;
             cur->x = glyph->x_control[idx];
             FT_TRACE7(( " cx#%d", idx ));
             break;
 
-          case 1:                           /* 16-bit absolute value */
+          case 1:                           /* 16-bit value */
             PFR_CHECK( 2 );
             cur->x = PFR_NEXT_SHORT( p );
             FT_TRACE7(( " x.%d", cur->x ));
@@ -518,22 +516,22 @@
         /*                                                         */
         switch ( format >> 4 )
         {
-        case 0:                                       /* end glyph => EXIT */
+        case 0:                             /* end glyph => EXIT */
           pfr_glyph_end( glyph );
           goto Exit;
 
-        case 1:                                         /* line operations */
+        case 1:                             /* line operations */
         case 2:
         case 3:
           error = pfr_glyph_line_to( glyph, pos );
           goto Test_Error;
 
-        case 4:                                 /* move to inside contour  */
-        case 5:                                 /* move to outside contour */
+        case 4:                             /* move to inside contour  */
+        case 5:                             /* move to outside contour */
           error = pfr_glyph_move_to( glyph, pos );
           goto Test_Error;
 
-        default:                                       /* curve operations */
+        default:                            /* curve operations */
           error = pfr_glyph_curve_to( glyph, pos, pos + 1, pos + 2 );
 
         Test_Error:  /* test error condition */
@@ -548,7 +546,7 @@
 
   Failure:
   Too_Short:
-    error = FT_THROW( Invalid_Table );
+    error = PFR_Err_Invalid_Table;
     FT_ERROR(( "pfr_glyph_load_simple: invalid glyph data\n" ));
     goto Exit;
   }
@@ -560,7 +558,7 @@
                            FT_Byte*   p,
                            FT_Byte*   limit )
   {
-    FT_Error        error  = FT_Err_Ok;
+    FT_Error        error  = PFR_Err_Ok;
     FT_GlyphLoader  loader = glyph->loader;
     FT_Memory       memory = loader->memory;
     PFR_SubGlyph    subglyph;
@@ -579,11 +577,10 @@
 
     /* ignore extra items when present */
     /*                                 */
-    if ( flags & PFR_GLYPH_COMPOUND_EXTRA_ITEMS )
+    if ( flags & PFR_GLYPH_EXTRA_ITEMS )
     {
       error = pfr_extra_items_skip( &p, limit );
-      if ( error )
-        goto Exit;
+      if (error) goto Exit;
     }
 
     /* we can't rely on the FT_GlyphLoader to load sub-glyphs, because   */
@@ -605,7 +602,7 @@
       /* to avoid endless recursion                   */
       if ( new_max > 64 )
       {
-        error = FT_THROW( Invalid_Table );
+        error = PFR_Err_Invalid_Table;
         FT_ERROR(( "pfr_glyph_load_compound:"
                    " too many compound glyphs components\n" ));
         goto Exit;
@@ -635,14 +632,14 @@
       if ( format & PFR_SUBGLYPH_XSCALE )
       {
         PFR_CHECK( 2 );
-        subglyph->x_scale = PFR_NEXT_SHORT( p ) * 16;
+        subglyph->x_scale = PFR_NEXT_SHORT( p ) << 4;
       }
 
       subglyph->y_scale = 0x10000L;
       if ( format & PFR_SUBGLYPH_YSCALE )
       {
         PFR_CHECK( 2 );
-        subglyph->y_scale = PFR_NEXT_SHORT( p ) * 16;
+        subglyph->y_scale = PFR_NEXT_SHORT( p ) << 4;
       }
 
       /* read offset */
@@ -696,7 +693,7 @@
       if ( format & PFR_SUBGLYPH_3BYTE_OFFSET )
       {
         PFR_CHECK( 3 );
-        subglyph->gps_offset = PFR_NEXT_ULONG( p );
+        subglyph->gps_offset = PFR_NEXT_LONG( p );
       }
       else
       {
@@ -712,7 +709,7 @@
 
   Failure:
   Too_Short:
-    error = FT_THROW( Invalid_Table );
+    error = PFR_Err_Invalid_Table;
     FT_ERROR(( "pfr_glyph_load_compound: invalid glyph data\n" ));
     goto Exit;
   }
@@ -739,7 +736,7 @@
 
     if ( size > 0 && *p & PFR_GLYPH_IS_COMPOUND )
     {
-      FT_UInt         n, old_count, count;
+      FT_Int          n, old_count, count;
       FT_GlyphLoader  loader = glyph->loader;
       FT_Outline*     base   = &loader->base.outline;
 
@@ -766,7 +763,7 @@
         PFR_SubGlyph  subglyph;
 
 
-        FT_TRACE4(( "  subglyph %d:\n", n ));
+        FT_TRACE4(( "subglyph %d:\n", n ));
 
         subglyph   = glyph->subs + old_count + n;
         old_points = base->n_points;

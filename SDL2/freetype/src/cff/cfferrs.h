@@ -4,7 +4,7 @@
 /*                                                                         */
 /*    CFF error codes (specification only).                                */
 /*                                                                         */
-/*  Copyright 2001-2016 by                                                 */
+/*  Copyright 2001 by                                                      */
 /*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
 /*                                                                         */
 /*  This file is part of the FreeType project, and may only be used,       */
@@ -22,21 +22,20 @@
   /*                                                                       */
   /*************************************************************************/
 
-#ifndef CFFERRS_H_
-#define CFFERRS_H_
+#ifndef __CFFERRS_H__
+#define __CFFERRS_H__
 
 #include FT_MODULE_ERRORS_H
 
-#undef FTERRORS_H_
+#undef __FTERRORS_H__
 
-#undef  FT_ERR_PREFIX
 #define FT_ERR_PREFIX  CFF_Err_
 #define FT_ERR_BASE    FT_Mod_Err_CFF
 
 
 #include FT_ERRORS_H
 
-#endif /* CFFERRS_H_ */
+#endif /* __CFFERRS_H__ */
 
 
 /* END */
