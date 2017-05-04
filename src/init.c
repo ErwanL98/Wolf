@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 14:33:06 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/04/25 11:25:27 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/04 12:27:39 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,14 @@ void	ft_init_all(t_def *def, t_sdl *sdl, t_parse *parse,  char *av)
 	SDL_FreeSurface(sdl->tmp_wall);
 	def->r_speed = 2.5;
 	sdl->y = 0;
+	sdl->src_sky.x = 684;
+	sdl->src_sky.y = 0;
+	sdl->src_sky.w = WIDTH;
+	sdl->src_sky.h = HEIGHT;
+	sdl->dst_sky.x = 0;
+	sdl->dst_sky.y = 0;
+	sdl->dst_sky.w = WIDTH;
+	sdl->dst_sky.h = HEIGHT;
 }
 
 void	ft_init_color(t_sdl *sdl)

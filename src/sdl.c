@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 14:10:32 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/04/25 12:12:37 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/04 12:08:45 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ void	ft_init_sdl(t_sdl *sdl)
 
 void	ft_init_textures(t_sdl *sdl)
 {
-	if ((sdl->t_sky = SDL_CreateTexture(sdl->render, SDL_PIXELFORMAT_RGBA8888, \
-					SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT)) == NULL)
-		ft_sdl_error();
 	if ((sdl->t_floor = SDL_CreateTexture(sdl->render, SDL_PIXELFORMAT_RGBA8888\
 					, SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT * 2)) == NULL)
 		ft_sdl_error();
@@ -54,7 +51,7 @@ void	ft_aff(t_sdl *sdl, t_def def)
 	sdl->floor.h = HEIGHT * 2;
 	SDL_SetRenderDrawColor(sdl->render, 0, 0, 0, 255);
 	SDL_RenderClear(sdl->render);
-	SDL_RenderCopy(sdl->render, sdl->t_sky, NULL, NULL);
+	SDL_RenderCopy(sdl->render, sdl->t_sky, &sdl->src_sky, &sdl->dst_sky);
 	SDL_RenderCopy(sdl->render, sdl->t_floor, NULL, &sdl->floor);
 	ft_loop(def, sdl);
 	ft_draw_minimap(sdl, def);
