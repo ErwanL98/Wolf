@@ -19,22 +19,22 @@ void	ft_event(t_sdl *sdl)
 		if (sdl->event_game.type == SDL_QUIT)
 			sdl->keep_game = 0;
 		if (sdl->event_game.type == SDL_KEYDOWN)
-			sdl->key[sdl->event_game.key.keysym.scancode] = 1;
+			sdl->in.key[sdl->event_game.key.keysym.scancode] = 1;
 		else if (sdl->event_game.type == SDL_KEYUP)
-			sdl->key[sdl->event_game.key.keysym.scancode] = 0;
+			sdl->in.key[sdl->event_game.key.keysym.scancode] = 0;
 		if (sdl->event_game.type == SDL_MOUSEMOTION)
 		{
-			sdl->x_rel += sdl->event_game.motion.xrel;
-			sdl->y_rel += sdl->event_game.motion.yrel;
+			sdl->in.x_rel += sdl->event_game.motion.xrel;
+			sdl->in.y_rel += sdl->event_game.motion.yrel;
 		}
 	}
 }
 
 void	ft_is_key(t_sdl *sdl, t_def *def)
 {
-	if (sdl->key[SDL_SCANCODE_LSHIFT])
+	if (sdl->in.key[SDL_SCANCODE_LSHIFT])
 		def->m_speed *= 1.5;
-	if (sdl->key[SDL_SCANCODE_W])
+	if (sdl->in.key[SDL_SCANCODE_W])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x + def->dir_x * \
 					def->m_speed)] == 0)
@@ -43,7 +43,7 @@ void	ft_is_key(t_sdl *sdl, t_def *def)
 					def->m_speed)][(int)def->pos_x] == 0)
 			def->pos_y += def->dir_y * def->m_speed;
 	}
-	if (sdl->key[SDL_SCANCODE_LEFT])
+	if (sdl->in.key[SDL_SCANCODE_LEFT])
 	{
 		def->o_dir_x = def->dir_x;
 		def->dir_x = def->dir_x * cos(-def->r_speed * M_PI / 180) - \
@@ -64,7 +64,7 @@ void	ft_is_key(t_sdl *sdl, t_def *def)
 
 void	ft_is_key2(t_sdl *sdl, t_def *def)
 {
-	if (sdl->key[SDL_SCANCODE_S])
+	if (sdl->in.key[SDL_SCANCODE_S])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x - def->dir_x * \
 					def->m_speed)] == 0)
@@ -73,7 +73,7 @@ void	ft_is_key2(t_sdl *sdl, t_def *def)
 					def->m_speed)][(int)def->pos_x] == 0)
 			def->pos_y -= def->dir_y * def->m_speed;
 	}
-	if (sdl->key[SDL_SCANCODE_RIGHT])
+	if (sdl->in.key[SDL_SCANCODE_RIGHT])
 	{
 		def->o_dir_x = def->dir_x;
 		def->dir_x = def->dir_x * cos(def->r_speed * M_PI / 180) - \
@@ -89,7 +89,7 @@ void	ft_is_key2(t_sdl *sdl, t_def *def)
 		if (sdl->src_sky.x > (sdl->width_sky - WIDTH))
 			sdl->src_sky.x = 0;
 	}
-	if (sdl->key[SDL_SCANCODE_A])
+	if (sdl->in.key[SDL_SCANCODE_A])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x - def->plane_x * \
 												def->m_speed)] == 0)
@@ -98,7 +98,7 @@ void	ft_is_key2(t_sdl *sdl, t_def *def)
 								def->m_speed)][(int)def->pos_x] == 0)
 			def->pos_y -= def->plane_y * def->m_speed;
 	}
-	if (sdl->key[SDL_SCANCODE_D])
+	if (sdl->in.key[SDL_SCANCODE_D])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x + def->plane_x * \
 												def->m_speed)] == 0)
@@ -107,10 +107,10 @@ void	ft_is_key2(t_sdl *sdl, t_def *def)
 								def->m_speed)][(int)def->pos_x] == 0)
 			def->pos_y += def->plane_y * def->m_speed;
 	}
-	if (sdl->key[SDL_SCANCODE_UP] && sdl->y <= 373)
+	if (sdl->in.key[SDL_SCANCODE_UP] && sdl->y <= 373)
 		sdl->y += 20;
-	if (sdl->key[SDL_SCANCODE_DOWN] && sdl->y >= -600)
+	if (sdl->in.key[SDL_SCANCODE_DOWN] && sdl->y >= -600)
 		sdl->y -= 20;
-	if (sdl->key[SDL_SCANCODE_ESCAPE])
+	if (sdl->in.key[SDL_SCANCODE_ESCAPE])
 		sdl->keep_game = 0;
 }

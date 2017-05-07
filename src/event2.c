@@ -35,7 +35,7 @@ void	ft_key_menu(t_sdl *sdl, int *select)
 
 void	ft_mouse1(t_sdl *sdl, t_def *def)
 {
-	if (sdl->x_rel < 0)
+	if (sdl->in.x_rel < 0)
 	{
 		def->o_dir_x = def->dir_x;
 		def->dir_x = def->dir_x * cos(-def->r_speed * 1.5 * M_PI / 180) - \
@@ -56,7 +56,7 @@ void	ft_mouse1(t_sdl *sdl, t_def *def)
 
 void	ft_mouse2(t_sdl *sdl, t_def *def)
 {
-	if (sdl->x_rel > 0)
+	if (sdl->in.x_rel > 0)
 	{
 		def->o_dir_x = def->dir_x;
 		def->dir_x = def->dir_x * cos(def->r_speed * 1.5 * M_PI / 180) - \

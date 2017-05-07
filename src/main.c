@@ -41,8 +41,8 @@ void	ft_game(t_sdl *sdl, char *map, int select)
 	ft_aff(sdl, def);
 	while (sdl->keep_game == 1)
 	{
-		sdl->x_rel = 0;
-		sdl->y_rel = 0;
+		sdl->in.x_rel = 0;
+		sdl->in.y_rel = 0;
 		ft_event(sdl);
 		def.m_speed = 0.0375;
 		ft_mouse1(sdl, &def);
@@ -54,7 +54,7 @@ void	ft_game(t_sdl *sdl, char *map, int select)
 		ft_aff(sdl, def);
 		SDL_Delay(8);
 	}
-	sdl->key[SDL_SCANCODE_ESCAPE] = 0;
+	sdl->in.key[SDL_SCANCODE_ESCAPE] = 0;
 	SDL_RenderClear(sdl->render);
 	ft_inttabdel(&def.tab);
 	SDL_DestroyTexture(sdl->map);

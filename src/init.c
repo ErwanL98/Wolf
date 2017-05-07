@@ -53,6 +53,7 @@ void	ft_init_all(t_def *def, t_sdl *sdl, t_parse *parse,  char *av)
 	sdl->dst_sky.y = 0;
 	sdl->dst_sky.w = WIDTH;
 	sdl->dst_sky.h = HEIGHT;
+	ft_memset(&sdl->in, 0, sizeof(sdl->in));
 }
 
 void	ft_init_color(t_sdl *sdl)

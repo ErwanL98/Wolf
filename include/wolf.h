@@ -88,6 +88,13 @@ typedef struct		s_draw
 	double			wall_x;
 }					t_draw;
 
+typedef struct				s_input
+{
+	char			key[SDL_NUM_SCANCODES];
+	int			x_rel;
+	int			y_rel;
+}					t_input;
+
 typedef struct		s_sdl
 {
 	SDL_Window		*win;
@@ -111,19 +118,18 @@ typedef struct		s_sdl
 	int				pitch;
 	int				keep_menu;
 	int				keep_game;
-	int				key[SDL_NUM_SCANCODES];
 	int				y;
 	int				width_sky;
-	SDL_Rect		floor;
 	SDL_Rect		postext;
+	SDL_Rect		floor;
 	SDL_Rect		posmap;
 	SDL_Rect		src;
 	SDL_Rect		dest;
 	SDL_Rect		src_sky;
 	SDL_Rect		dst_sky;
-	int			x_rel;
-	int			y_rel;
+	t_input			in;
 }					t_sdl;
+
 
 int					**ft_create_map(char *av, t_parse parse);
 void				ft_check_error(char *av, t_parse *parse);
