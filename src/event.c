@@ -22,6 +22,11 @@ void	ft_event(t_sdl *sdl)
 			sdl->key[sdl->event_game.key.keysym.scancode] = 1;
 		else if (sdl->event_game.type == SDL_KEYUP)
 			sdl->key[sdl->event_game.key.keysym.scancode] = 0;
+		if (sdl->event_game.type == SDL_MOUSEMOTION)
+		{
+			sdl->x_rel += sdl->event_game.motion.xrel;
+			sdl->y_rel += sdl->event_game.motion.yrel;
+		}
 	}
 }
 

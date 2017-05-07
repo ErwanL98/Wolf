@@ -43,7 +43,7 @@ void	ft_init_all(t_def *def, t_sdl *sdl, t_parse *parse,  char *av)
 					sdl->tmp_wall)) == NULL)
 		ft_sdl_error();
 	SDL_FreeSurface(sdl->tmp_wall);
-	def->r_speed = 2.5;
+	def->r_speed = 1.25;
 	sdl->y = 0;
 	sdl->src_sky.x = 684;
 	sdl->src_sky.y = 0;

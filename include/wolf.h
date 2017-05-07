@@ -119,23 +119,11 @@ typedef struct		s_sdl
 	SDL_Rect		posmap;
 	SDL_Rect		src;
 	SDL_Rect		dest;
-	SDL_Rect		floor_src;
-	SDL_Rect		floor_dest;
 	SDL_Rect		src_sky;
-	SDL_Rect		src_sky2;
 	SDL_Rect		dst_sky;
-	SDL_Rect		dst_sky2;
+	int			x_rel;
+	int			y_rel;
 }					t_sdl;
-
-typedef struct		s_floor
-{
-	double			f_x_wall;
-	double			f_y_wall;
-	double			dist_wall;
-	double			dist_player;
-	double			current_dist;
-	double			weight;	
-}					t_floor;
 
 int					**ft_create_map(char *av, t_parse parse);
 void				ft_check_error(char *av, t_parse *parse);
@@ -170,5 +158,7 @@ void				ft_init_2(t_def *def);
 void				ft_free(t_sdl *sdl);
 void				ft_key_menu(t_sdl *sdl, int *select);
 void				ft_init_textures(t_sdl *sdl);
+void				ft_mouse1(t_sdl *sdl, t_def *def);
+void				ft_mouse2(t_sdl *sdl, t_def *def);
 
 #endif

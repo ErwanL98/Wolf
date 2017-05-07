@@ -14,6 +14,8 @@
 
 void	ft_init_sdl(t_sdl *sdl)
 {
+	if((SDL_SetRelativeMouseMode(SDL_TRUE)) != 0)
+		ft_sdl_error();
 	if ((SDL_Init(SDL_INIT_VIDEO) || TTF_Init()) != 0)
 		ft_sdl_error();
 	if ((sdl->win = SDL_CreateWindow("Win", SDL_WINDOWPOS_CENTERED, \
