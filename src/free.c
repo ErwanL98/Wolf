@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 14:14:30 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/09 13:48:34 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/09 15:10:26 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_free(t_sdl *sdl)
 	SDL_DestroyTexture(sdl->game[TSKY]);
 	SDL_DestroyTexture(sdl->game[TFLOOR]);
 	TTF_CloseFont(sdl->font);
+	TTF_CloseFont(sdl->font2);
 	TTF_Quit();
 	SDL_Quit();
 }

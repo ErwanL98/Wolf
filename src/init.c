@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 14:33:06 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/09 14:03:32 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/09 16:25:54 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	ft_init_rect(t_sdl *sdl, t_def *def)
 
 void	ft_init(t_def *def, t_sdl *sdl, t_parse *parse,  char *av)
 {
+	sdl->mouse = 0;
+	def->w_time = 0;
 	sdl->keep_game = 1;
 	ft_check_error(av, parse);
 	def->tab = ft_create_map(av, *parse);

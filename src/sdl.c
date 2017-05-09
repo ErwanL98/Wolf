@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/09 13:05:47 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/09 14:01:50 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/09 15:43:18 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ void		ft_init_sdl(t_sdl *sdl)
 		ft_sdl_error();
 	ft_init_color(sdl);
 	if ((sdl->font = TTF_OpenFont("fonts/wolf.ttf", 75)) == NULL)
+		ft_sdl_error();
+	ft_init_saf(sdl);
+	if ((sdl->font2 = TTF_OpenFont("fonts/times.ttf", 20)) == NULL)
 		ft_sdl_error();
 	ft_init_saf(sdl);
 	sdl->format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
@@ -49,11 +52,13 @@ void		ft_aff(t_sdl *sdl, t_def def)
 	sdl->dst[DFLOOR].h = HEIGHT * 2;
 	SDL_SetRenderDrawColor(sdl->render, 0, 0, 0, 255);
 	SDL_RenderClear(sdl->render);
-	SDL_RenderCopy(sdl->render, sdl->game[TSKY], &sdl->src[SSKY], &sdl->dst[DSKY]);
+	SDL_RenderCopy(sdl->render, sdl->game[TSKY], &sdl->src[SSKY], \
+														&sdl->dst[DSKY]);
 	SDL_RenderCopy(sdl->render, sdl->game[TFLOOR], NULL, &sdl->dst[DFLOOR]);
 	ft_loop(def, sdl);
 	ft_draw_minimap(sdl, def);
 	SDL_RenderCopy(sdl->render, sdl->game[TMAP], NULL, &sdl->dst[DMAP]);
+	SDL_RenderCopy(sdl->render, sdl->game[TFPS], NULL, &sdl->dst[DFPS]);
 	SDL_RenderPresent(sdl->render);
 }
 
