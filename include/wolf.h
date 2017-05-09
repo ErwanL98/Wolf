@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 11:03:15 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/04 12:08:55 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/09 14:16:19 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 # define HEIGHT 768
 
 enum {IMG, MENU, TEXT};
+enum {TSKY, TFLOOR, TWALL, TMAP};
+enum {TTF, TEXTURE};
+enum {DMAP, DTEXT, DFLOOR, DWALL, DSKY}; 
+enum {SWALL, SSKY};
 
 typedef struct		s_parse
 {
@@ -88,11 +92,11 @@ typedef struct		s_draw
 	double			wall_x;
 }					t_draw;
 
-typedef struct				s_input
+typedef struct		s_input
 {
 	char			key[SDL_NUM_SCANCODES];
-	int			x_rel;
-	int			y_rel;
+	int				x_rel;
+	int				y_rel;
 }					t_input;
 
 typedef struct		s_sdl
@@ -103,30 +107,19 @@ typedef struct		s_sdl
 	SDL_Renderer	*render;
 	SDL_PixelFormat	*format;
 	SDL_Texture		*menu[3];
-	SDL_Texture		*t_sky;
-	SDL_Texture		*t_floor;
-	SDL_Texture		*map;
-	SDL_Texture		*wall;
-	SDL_Texture		*tmp_t_sky;
-	Uint32			*pixels;
-	SDL_Surface		*tmp_menu;
-	SDL_Surface		*tmp_wall;
-	SDL_Surface		*tmp_sky;
+	SDL_Texture		*game[4];
+	SDL_Surface		*load[2];
 	TTF_Font		*font;
 	SDL_Color		color[2];
 	void			*tmp;
 	int				pitch;
+	Uint32			*pixels;
 	int				keep_menu;
 	int				keep_game;
 	int				y;
 	int				width_sky;
-	SDL_Rect		postext;
-	SDL_Rect		floor;
-	SDL_Rect		posmap;
-	SDL_Rect		src;
-	SDL_Rect		dest;
-	SDL_Rect		src_sky;
-	SDL_Rect		dst_sky;
+	SDL_Rect		dst[5];
+	SDL_Rect		src[2];
 	t_input			in;
 }					t_sdl;
 
@@ -149,7 +142,7 @@ void				ft_is_key2(t_sdl *sdl, t_def *def);
 void				ft_init_sdl(t_sdl *sdl);
 void				ft_event(t_sdl *sdl);
 void				ft_draw_minimap(t_sdl *sdl, t_def def);
-void				ft_init_all(t_def *def, t_sdl *sdl, t_parse *parse, \
+void				ft_init(t_def *def, t_sdl *sdl, t_parse *parse, \
 																	char *av);
 void				ft_aff(t_sdl *sdl, t_def def);
 void				ft_menu(t_sdl *sdl, int select);
@@ -163,8 +156,10 @@ void				ft_init_1(t_def *def);
 void				ft_init_2(t_def *def);
 void				ft_free(t_sdl *sdl);
 void				ft_key_menu(t_sdl *sdl, int *select);
-void				ft_init_textures(t_sdl *sdl);
+void				ft_init_saf(t_sdl *sdl);
 void				ft_mouse1(t_sdl *sdl, t_def *def);
 void				ft_mouse2(t_sdl *sdl, t_def *def);
+void				ft_init_rect(t_sdl *sdl, t_def *def);
+SDL_Texture			*ft_create_texture(char *str, t_sdl *sdl);
 
 #endif

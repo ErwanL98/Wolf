@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 14:27:11 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/04/26 15:32:09 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/09 14:12:45 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,25 @@ void	ft_text_cases(t_sdl *sdl, int text, int select)
 {
 	if (text == 1)
 	{
-		if ((sdl->tmp_menu = TTF_RenderText_Blended(sdl->font, "Map 42", \
+		if ((sdl->load[TTF] = TTF_RenderText_Blended(sdl->font, "Map 42", \
 						sdl->color[(select == 1) ? 1 : 0])) == NULL)
 			ft_sdl_error();
 	}
 	else if (text == 2)
 	{
-		if ((sdl->tmp_menu = TTF_RenderText_Blended(sdl->font, "Level 1", \
+		if ((sdl->load[TTF] = TTF_RenderText_Blended(sdl->font, "Level 1", \
 						sdl->color[(select == 2) ? 1 : 0])) == NULL)
 			ft_sdl_error();
 	}
 	else if (text == 3)
 	{
-		if ((sdl->tmp_menu = TTF_RenderText_Blended(sdl->font, "Level 2", \
+		if ((sdl->load[TTF] = TTF_RenderText_Blended(sdl->font, "Level 2", \
 						sdl->color[(select == 3) ? 1 : 0])) == NULL)
 			ft_sdl_error();
 	}
 	else if (text == 4)
 	{
-		if ((sdl->tmp_menu = TTF_RenderText_Blended(sdl->font, "Exit", \
+		if ((sdl->load[TTF] = TTF_RenderText_Blended(sdl->font, "Exit", \
 						sdl->color[(select == 4) ? 1 : 0])) == NULL)
 			ft_sdl_error();
 	}
@@ -64,15 +64,15 @@ void	ft_text(t_sdl *sdl, int text, int select)
 
 	ft_text_cases(sdl, text, select);
 	if ((sdl->menu[TEXT] = SDL_CreateTextureFromSurface(sdl->render, \
-					sdl->tmp_menu)) == NULL)
+					sdl->load[TTF])) == NULL)
 		ft_sdl_error();
 	SDL_SetTextureAlphaMod(sdl->menu[TEXT], 190);
-	SDL_QueryTexture(sdl->menu[TEXT], NULL, NULL, &sdl->postext.w, \
-			&sdl->postext.h);
-	sdl->postext.x = ((WIDTH / 2) - (sdl->postext.w / 2)) + 10;
-	sdl->postext.y = 340 + i;
-	SDL_FreeSurface(sdl->tmp_menu);
-	SDL_RenderCopy(sdl->render, sdl->menu[TEXT], NULL, &sdl->postext);
+	SDL_QueryTexture(sdl->menu[TEXT], NULL, NULL, &sdl->dst[DTEXT].w, \
+			&sdl->dst[DTEXT].h);
+	sdl->dst[DTEXT].x = ((WIDTH / 2) - (sdl->dst[DTEXT].w / 2)) + 10;
+	sdl->dst[DTEXT].y = 340 + i;
+	SDL_FreeSurface(sdl->load[TTF]);
+	SDL_RenderCopy(sdl->render, sdl->menu[TEXT], NULL, &sdl->dst[DTEXT]);
 	SDL_DestroyTexture(sdl->menu[TEXT]);
 	i = (i == 210) ? 0 : i + 70;
 }

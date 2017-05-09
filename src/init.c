@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 14:33:06 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/04 12:27:39 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/09 14:03:32 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,36 +23,36 @@ void	ft_init_calc(t_calc *calc)
 			(calc->ray_dir_y * calc->ray_dir_y));
 }
 
-void	ft_init_all(t_def *def, t_sdl *sdl, t_parse *parse,  char *av)
+void	ft_init_rect(t_sdl *sdl, t_def *def)
+{
+	sdl->dst[DMAP].x = 0;
+	sdl->dst[DMAP].y = 0;
+	sdl->dst[DMAP].w = def->map_w;
+	sdl->dst[DMAP].h = def->map_h;
+	sdl->src[SSKY].x = 684;
+	sdl->src[SSKY].y = 0;
+	sdl->src[SSKY].w = WIDTH;
+	sdl->src[SSKY].h = HEIGHT;
+	sdl->dst[DSKY].x = 0;
+	sdl->dst[DSKY].y = 0;
+	sdl->dst[DSKY].w = WIDTH;
+	sdl->dst[DSKY].h = HEIGHT;
+}
+
+void	ft_init(t_def *def, t_sdl *sdl, t_parse *parse,  char *av)
 {
 	sdl->keep_game = 1;
 	ft_check_error(av, parse);
 	def->tab = ft_create_map(av, *parse);
 	def->map_w = parse->width * 14;
 	def->map_h = parse->height * 14;
-	sdl->posmap.x = 0;
-	sdl->posmap.y = 0;
-	sdl->posmap.w = def->map_w;
-	sdl->posmap.h = def->map_h;
-	if ((sdl->map = SDL_CreateTexture(sdl->render, SDL_PIXELFORMAT_RGBA8888, \
+	ft_init_rect(sdl, def);
+	if ((sdl->game[TMAP] = SDL_CreateTexture(sdl->render, SDL_PIXELFORMAT_RGBA8888, \
 				SDL_TEXTUREACCESS_STREAMING, def->map_w, def->map_h)) == NULL)
 		ft_sdl_error();
-	if ((sdl->tmp_wall = SDL_LoadBMP("./img/wall.bmp")) == NULL)
-		ft_sdl_error();
-	if ((sdl->wall = SDL_CreateTextureFromSurface(sdl->render, \
-					sdl->tmp_wall)) == NULL)
-		ft_sdl_error();
-	SDL_FreeSurface(sdl->tmp_wall);
+	sdl->game[TWALL] = ft_create_texture("./img/wall.bmp", sdl);
 	def->r_speed = 1.25;
 	sdl->y = 0;
-	sdl->src_sky.x = 684;
-	sdl->src_sky.y = 0;
-	sdl->src_sky.w = WIDTH;
-	sdl->src_sky.h = HEIGHT;
-	sdl->dst_sky.x = 0;
-	sdl->dst_sky.y = 0;
-	sdl->dst_sky.w = WIDTH;
-	sdl->dst_sky.h = HEIGHT;
 	ft_memset(&sdl->in, 0, sizeof(sdl->in));
 }
 

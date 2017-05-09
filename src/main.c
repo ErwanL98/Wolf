@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 11:04:57 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/04 12:46:49 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/09 13:50:04 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_game(t_sdl *sdl, char *map, int select)
 	t_def	def;
 	t_parse	parse;
 
-	ft_init_all(&def, sdl, &parse, map);
+	ft_init(&def, sdl, &parse, map);
 	if (select == 1 || select == 2)
 		(select == 1) ? ft_init_42(&def) : ft_init_1(&def);
 	else if (select == 3)
@@ -45,8 +45,8 @@ void	ft_game(t_sdl *sdl, char *map, int select)
 		sdl->in.y_rel = 0;
 		ft_event(sdl);
 		def.m_speed = 0.0375;
-		ft_mouse1(sdl, &def);
 		ft_is_key(sdl, &def);
+		ft_mouse1(sdl, &def);
 		def.o_time = def.time;
 		def.time = SDL_GetTicks();
 		def.frame_time = (def.time - def.o_time) / 1000;
@@ -57,6 +57,6 @@ void	ft_game(t_sdl *sdl, char *map, int select)
 	sdl->in.key[SDL_SCANCODE_ESCAPE] = 0;
 	SDL_RenderClear(sdl->render);
 	ft_inttabdel(&def.tab);
-	SDL_DestroyTexture(sdl->map);
-	SDL_DestroyTexture(sdl->wall);
+	SDL_DestroyTexture(sdl->game[TMAP]);
+	SDL_DestroyTexture(sdl->game[TWALL]);
 }
