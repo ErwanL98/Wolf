@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/09 13:05:47 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/09 15:43:18 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/10 16:13:57 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		ft_init_sdl(t_sdl *sdl)
 	if ((sdl->font = TTF_OpenFont("fonts/wolf.ttf", 75)) == NULL)
 		ft_sdl_error();
 	ft_init_saf(sdl);
-	if ((sdl->font2 = TTF_OpenFont("fonts/times.ttf", 20)) == NULL)
+	if ((sdl->font2 = TTF_OpenFont("fonts/wolf.ttf", 35)) == NULL)
 		ft_sdl_error();
 	ft_init_saf(sdl);
 	sdl->format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
@@ -41,7 +41,7 @@ void		ft_init_saf(t_sdl *sdl)
 					SDL_PIXELFORMAT_RGBA8888, \
 					SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT * 2)) == NULL)
 		ft_sdl_error();
-	sdl->menu[IMG] = ft_create_texture("./img/menu.bmp", sdl);
+	sdl->menu[IMG] = ft_create_texture("./img/menu.bmp", sdl, 0);
 }
 
 void		ft_aff(t_sdl *sdl, t_def def)
@@ -58,16 +58,24 @@ void		ft_aff(t_sdl *sdl, t_def def)
 	ft_loop(def, sdl);
 	ft_draw_minimap(sdl, def);
 	SDL_RenderCopy(sdl->render, sdl->game[TMAP], NULL, &sdl->dst[DMAP]);
+	if (sdl->weapon == 1)
+		SDL_RenderCopy(sdl->render, sdl->game[TSHOTGUN], NULL, &sdl->dst[DSHOTGUN]);
+	else if (sdl->weapon == 2)
+		SDL_RenderCopy(sdl->render, sdl->game[TGUN], NULL, &sdl->dst[DGUN]);
+	SDL_RenderCopy(sdl->render, sdl->game[TWEAPONS], NULL, &sdl->dst[DWEAPONS]);
 	SDL_RenderCopy(sdl->render, sdl->game[TFPS], NULL, &sdl->dst[DFPS]);
 	SDL_RenderPresent(sdl->render);
 }
 
-SDL_Texture	*ft_create_texture(char *path, t_sdl *sdl)
+SDL_Texture	*ft_create_texture(char *path, t_sdl *sdl, int mod)
 {
 	SDL_Texture		*new;
 
 	if ((sdl->load[TEXTURE] = SDL_LoadBMP(path)) == NULL)
 		ft_sdl_error();
+	if (mod == 1)
+		SDL_SetColorKey(sdl->load[TEXTURE], SDL_TRUE, \
+				SDL_MapRGBA(sdl->load[TEXTURE]->format, 0, 255, 255, 255));
 	if ((new = SDL_CreateTextureFromSurface(sdl->render, \
 					sdl->load[TEXTURE])) == NULL)
 		ft_sdl_error();

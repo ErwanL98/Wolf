@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 13:46:06 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/09 16:26:30 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/10 15:15:20 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ void	ft_key_menu(t_sdl *sdl, int *select)
 
 void	ft_mouse1(t_sdl *sdl, t_def *def)
 {
-	if (sdl->in.key[SDL_SCANCODE_M])
-		sdl->mouse = (sdl->mouse == 1) ? 0 : 1;
-	if (sdl->in.x_rel < 0 && sdl->mouse)
+	if (sdl->in.x_rel < 0)
 	{
 		def->o_dir_x = def->dir_x;
 		def->dir_x = def->dir_x * cos(-def->r_speed * 1.5 * M_PI / 180) - \
@@ -49,7 +47,7 @@ void	ft_mouse1(t_sdl *sdl, t_def *def)
 					  def->plane_y * sin(-def->r_speed * 1.5 * M_PI / 180);
 		def->plane_y = def->o_plane_x * sin(-def->r_speed * 1.5 * M_PI / 180) + \
 					  def->plane_y * cos(-def->r_speed * 1.5 * M_PI / 180);
-		sdl->src[SSKY].x -= (WIDTH / 66 * 2.5);
+		sdl->src[SSKY].x -= (WIDTH / 66 * def->r_speed);
 		if (sdl->src[SSKY].x < 0)
 			sdl->src[SSKY].x = sdl->width_sky - WIDTH;
 	}
@@ -58,7 +56,7 @@ void	ft_mouse1(t_sdl *sdl, t_def *def)
 
 void	ft_mouse2(t_sdl *sdl, t_def *def)
 {
-	if (sdl->in.x_rel > 0 && sdl->mouse)
+	if (sdl->in.x_rel > 0)
 	{
 		def->o_dir_x = def->dir_x;
 		def->dir_x = def->dir_x * cos(def->r_speed * 1.5 * M_PI / 180) - \
@@ -70,12 +68,12 @@ void	ft_mouse2(t_sdl *sdl, t_def *def)
 					  def->plane_y * sin(def->r_speed * 1.5 * M_PI / 180);
 		def->plane_y = def->o_plane_x * sin(def->r_speed * 1.5 * M_PI / 180) + \
 					  def->plane_y * cos(def->r_speed * 1.5 * M_PI / 180);
-		sdl->src[SSKY].x += (WIDTH / 66 * 2.5);
+		sdl->src[SSKY].x += (WIDTH / 66 * def->r_speed);
 		if (sdl->src[SSKY].x > (sdl->width_sky - WIDTH))
 			sdl->src[SSKY].x = 0;
 	}
-/*	if (sdl->in.y_rel < -2 && sdl->y <= 373)
+	if (sdl->in.y_rel < -1 && sdl->y <= 373)
 		sdl->y += 20;
-	if (sdl->in.y_rel > 2 && sdl->y >= -600)
-		sdl->y -= 20;*/
+	if (sdl->in.y_rel > 1 && sdl->y >= -600)
+		sdl->y -= 20;
 }

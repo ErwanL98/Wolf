@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 11:04:57 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/09 15:49:26 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/10 16:07:18 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_fps(t_sdl *sdl, t_def *def)
 	def->time = SDL_GetTicks();
 	def->frame_time = (def->time - def->o_time) / 1000;
 	def->w_time += def->frame_time;
-	if (def->w_time == 0 || def->w_time > 0.1)
+	if (def->w_time == 0 || def->w_time > 0.2)
 	{
 		fps = ft_freestrjoin(ft_itoa((int)(1 / def->frame_time)), " FPS", 1);
 		if ((sdl->load[TTF] = TTF_RenderText_Blended(sdl->font2, fps, \
@@ -49,7 +49,7 @@ void	ft_fps(t_sdl *sdl, t_def *def)
 		SDL_QueryTexture(sdl->game[TFPS], NULL, NULL, \
 				&sdl->dst[DFPS].w, &sdl->dst[DFPS].h);
 		sdl->dst[DFPS].x = WIDTH - sdl->dst[DFPS].w - 10;
-		sdl->dst[DFPS].y = 10;
+		sdl->dst[DFPS].y = 5;
 		SDL_FreeSurface(sdl->load[TTF]);
 		def->w_time = 0;
 		free(fps);

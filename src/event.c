@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/31 15:36:03 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/09 13:37:08 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/10 16:13:35 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ void	ft_is_key(t_sdl *sdl, t_def *def)
 {
 	if (sdl->in.key[SDL_SCANCODE_LSHIFT])
 		def->m_speed *= 1.5;
+	if (sdl->in.key[SDL_SCANCODE_1] && sdl->in.key[SDL_SCANCODE_2] == 0)
+		sdl->weapon = 1;
+	if (sdl->in.key[SDL_SCANCODE_2] && sdl->in.key[SDL_SCANCODE_1] == 0)
+		sdl->weapon = 2;
 	if (sdl->in.key[SDL_SCANCODE_W])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x + def->dir_x * \
@@ -55,7 +59,7 @@ void	ft_is_key(t_sdl *sdl, t_def *def)
 					  def->plane_y * sin(-def->r_speed * M_PI / 180);
 		def->plane_y = def->o_plane_x * sin(-def->r_speed * M_PI / 180) + \
 					  def->plane_y * cos(-def->r_speed * M_PI / 180);
-		sdl->src[SSKY].x -= (WIDTH / 66 * 2.5);
+		sdl->src[SSKY].x -= (WIDTH / 66 * def->r_speed);
 		if (sdl->src[SSKY].x < 0)
 			sdl->src[SSKY].x = sdl->width_sky - WIDTH;
 	}
@@ -85,7 +89,7 @@ void	ft_is_key2(t_sdl *sdl, t_def *def)
 					  def->plane_y * sin(def->r_speed * M_PI / 180);
 		def->plane_y = def->o_plane_x * sin(def->r_speed * M_PI / 180) + \
 					  def->plane_y * cos(def->r_speed * M_PI / 180);
-		sdl->src[SSKY].x += (WIDTH / 66 * 2.5);
+		sdl->src[SSKY].x += (WIDTH / 66 * def->r_speed);
 		if (sdl->src[SSKY].x > (sdl->width_sky - WIDTH))
 			sdl->src[SSKY].x = 0;
 	}

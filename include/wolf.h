@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 11:03:15 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/09 16:26:05 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/10 15:54:46 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 # define HEIGHT 768
 
 enum {IMG, MENU, TEXT};
-enum {TSKY, TFLOOR, TWALL, TMAP, TFPS};
+enum {TSKY, TFLOOR, TWALL, TMAP, TFPS, TSHOTGUN, TWEAPONS, TGUN};
 enum {TTF, TEXTURE};
-enum {DMAP, DTEXT, DFLOOR, DWALL, DSKY, DFPS}; 
+enum {DMAP, DTEXT, DFLOOR, DWALL, DSKY, DFPS, DSHOTGUN, DWEAPONS, DGUN}; 
 enum {SWALL, SSKY};
 
 typedef struct		s_parse
@@ -108,7 +108,7 @@ typedef struct		s_sdl
 	SDL_Renderer	*render;
 	SDL_PixelFormat	*format;
 	SDL_Texture		*menu[3];
-	SDL_Texture		*game[5];
+	SDL_Texture		*game[8];
 	SDL_Surface		*load[2];
 	TTF_Font		*font;
 	TTF_Font		*font2;
@@ -120,9 +120,9 @@ typedef struct		s_sdl
 	int				keep_game;
 	int				y;
 	int				width_sky;
-	int				mouse;
-	SDL_Rect		dst[6];
+	SDL_Rect		dst[9];
 	SDL_Rect		src[2];
+	int				weapon;
 	t_input			in;
 }					t_sdl;
 
@@ -163,7 +163,8 @@ void				ft_init_saf(t_sdl *sdl);
 void				ft_mouse1(t_sdl *sdl, t_def *def);
 void				ft_mouse2(t_sdl *sdl, t_def *def);
 void				ft_init_rect(t_sdl *sdl, t_def *def);
-SDL_Texture			*ft_create_texture(char *str, t_sdl *sdl);
+SDL_Texture			*ft_create_texture(char *str, t_sdl *sdl, int mod);
 void				ft_fps(t_sdl *sdl, t_def *def);
+void				ft_init_textures(t_sdl *sdl, t_def *def);
 
 #endif

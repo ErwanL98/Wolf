@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/29 14:33:20 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/09 14:17:19 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/10 13:14:53 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	ft_draw_saf(t_sdl *sdl)
 	int		y;
 	Uint32	color;
 
-	sdl->game[TSKY] = ft_create_texture("./img/sky2.bmp", sdl);
+	sdl->game[TSKY] = ft_create_texture("./img/sky2.bmp", sdl, 0);
 	SDL_QueryTexture(sdl->game[TSKY], NULL, NULL, &sdl->width_sky, NULL);
 	y = -1;
 	color = SDL_MapRGBA(sdl->format, 64, 64, 64, 255);
