@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 13:46:06 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/10 15:15:20 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/12 14:31:49 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,16 @@ void	ft_mouse1(t_sdl *sdl, t_def *def)
 	if (sdl->in.x_rel < 0)
 	{
 		def->o_dir_x = def->dir_x;
-		def->dir_x = def->dir_x * cos(-def->r_speed * 1.5 * M_PI / 180) - \
-					def->dir_y * sin(-def->r_speed * 1.5 *  M_PI / 180);
-		def->dir_y = def->o_dir_x * sin(-def->r_speed * 1.5 * M_PI / 180) + \
-					def->dir_y * cos(-def->r_speed * 1.5 * M_PI / 180);
+		def->dir_x = def->dir_x * cos(def->r_speed * sdl->in.x_rel * 0.3 * M_PI / 180) - \
+					def->dir_y * sin(def->r_speed * sdl->in.x_rel * 0.3 *  M_PI / 180);
+		def->dir_y = def->o_dir_x * sin(def->r_speed * sdl->in.x_rel * 0.3 * M_PI / 180) + \
+					def->dir_y * cos(def->r_speed * sdl->in.x_rel * 0.3 * M_PI / 180);
 		def->o_plane_x = def->plane_x;
-		def->plane_x = def->plane_x * cos(-def->r_speed * 1.5 * M_PI / 180) - \
-					  def->plane_y * sin(-def->r_speed * 1.5 * M_PI / 180);
-		def->plane_y = def->o_plane_x * sin(-def->r_speed * 1.5 * M_PI / 180) + \
-					  def->plane_y * cos(-def->r_speed * 1.5 * M_PI / 180);
-		sdl->src[SSKY].x -= (WIDTH / 66 * def->r_speed);
+		def->plane_x = def->plane_x * cos(def->r_speed * sdl->in.x_rel * 0.3 * M_PI / 180) - \
+					  def->plane_y * sin(def->r_speed * sdl->in.x_rel * 0.3 * M_PI / 180);
+		def->plane_y = def->o_plane_x * sin(def->r_speed * sdl->in.x_rel * 0.3 * M_PI / 180) + \
+					  def->plane_y * cos(def->r_speed * sdl->in.x_rel * 0.3 * M_PI / 180);
+		sdl->src[SSKY].x += (WIDTH / 66 * (def->r_speed * sdl->in.x_rel * 0.3));
 		if (sdl->src[SSKY].x < 0)
 			sdl->src[SSKY].x = sdl->width_sky - WIDTH;
 	}
@@ -59,21 +59,25 @@ void	ft_mouse2(t_sdl *sdl, t_def *def)
 	if (sdl->in.x_rel > 0)
 	{
 		def->o_dir_x = def->dir_x;
-		def->dir_x = def->dir_x * cos(def->r_speed * 1.5 * M_PI / 180) - \
-					def->dir_y * sin(def->r_speed * 1.5 * M_PI / 180);
-		def->dir_y = def->o_dir_x * sin(def->r_speed * 1.5 * M_PI / 180) + \
-					def->dir_y * cos(def->r_speed * 1.5 * M_PI / 180);
+		def->dir_x = def->dir_x * cos(def->r_speed * sdl->in.x_rel * \
+			0.3 * M_PI / 180) - def->dir_y * sin(def->r_speed * \
+									sdl->in.x_rel * 0.3 * M_PI / 180);
+		def->dir_y = def->o_dir_x * sin(def->r_speed * sdl->in.x_rel * \
+			0.3 * M_PI / 180) + def->dir_y * cos(def->r_speed * \
+										sdl->in.x_rel * 0.3 * M_PI / 180);
 		def->o_plane_x = def->plane_x;
-		def->plane_x = def->plane_x * cos(def->r_speed * 1.5 * M_PI / 180) - \
-					  def->plane_y * sin(def->r_speed * 1.5 * M_PI / 180);
-		def->plane_y = def->o_plane_x * sin(def->r_speed * 1.5 * M_PI / 180) + \
-					  def->plane_y * cos(def->r_speed * 1.5 * M_PI / 180);
-		sdl->src[SSKY].x += (WIDTH / 66 * def->r_speed);
+		def->plane_x = def->plane_x * cos(def->r_speed * sdl->in.x_rel * \
+				0.3 * M_PI / 180) - def->plane_y * sin(def->r_speed * \
+									sdl->in.x_rel * 0.3 * M_PI / 180);
+		def->plane_y = def->o_plane_x * sin(def->r_speed * sdl->in.x_rel * \
+			0.3 * M_PI / 180) + def->plane_y * cos(def->r_speed * \
+									sdl->in.x_rel * 0.3 * M_PI / 180);
+		sdl->src[SSKY].x += (WIDTH / 66 * (def->r_speed * sdl->in.x_rel * 0.3));
 		if (sdl->src[SSKY].x > (sdl->width_sky - WIDTH))
 			sdl->src[SSKY].x = 0;
 	}
 	if (sdl->in.y_rel < -1 && sdl->y <= 373)
-		sdl->y += 20;
+		sdl->y -= def->r_speed * sdl->in.y_rel * 2.3;
 	if (sdl->in.y_rel > 1 && sdl->y >= -600)
-		sdl->y -= 20;
+		sdl->y -= def->r_speed * sdl->in.y_rel * 2.3;
 }

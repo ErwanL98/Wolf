@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 14:47:38 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/04/20 17:33:15 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/12 15:07:56 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	ft_check_error2(t_parse *parse)
 	parse->width = 0;
 	while (get_next_line(parse->fd, &parse->line) == 1)
 	{
+		if (str)
+			ft_strdel(&str);
 		ft_check_valid(parse->line);
 		parse->nb = ft_cw(parse->line, ' ');
 		if ((parse->width != 0 && parse->nb != parse->width) || parse->nb == 0)
@@ -61,24 +63,33 @@ int		**ft_create_map(char *av, t_parse parse)
 	tab = NULL;
 	if ((parse.fd = open(av, O_RDONLY)) == -1)
 		ft_error_file();
-	if ((tab = (int **)malloc(sizeof(int *) * (parse.height + 1))) == NULL)
-		ft_error();
 	parse.y = 0;
-	while (get_next_line(parse.fd, &parse.line) == 1)
-	{
-		if ((tab[parse.y] = (int *)malloc(sizeof(int) * parse.width)) == NULL)
-			ft_error();
-		parse.split = ft_strsplit(parse.line, ' ');
-		parse.x = -1;
-		while (parse.split[++parse.x])
-			tab[parse.y][parse.x] = ft_atoi(parse.split[parse.x]);
-		ft_tabdel(&parse.split);
-		parse.y++;
-		ft_strdel(&parse.line);
-	}
-	tab[parse.y] = NULL;
+	tab = ft_assign(&parse);
 	if ((close(parse.fd)) == -1)
 		ft_error_file();
+	return (tab);
+}
+
+int		**ft_assign(t_parse *parse)
+{
+	int		**tab;
+
+	tab = NULL;
+	if ((tab = (int **)malloc(sizeof(int *) * (parse->height + 1))) == NULL)
+		ft_error();
+	while (get_next_line(parse->fd, &parse->line) == 1)
+	{
+		if ((tab[parse->y] = (int *)malloc(sizeof(int) * parse->width)) == NULL)
+			ft_error();
+		parse->split = ft_strsplit(parse->line, ' ');
+		parse->x = -1;
+		while (parse->split[++parse->x])
+			tab[parse->y][parse->x] = ft_atoi(parse->split[parse->x]);
+		ft_tabdel(&parse->split);
+		parse->y++;
+		ft_strdel(&parse->line);
+	}
+	tab[parse->y] = NULL;
 	return (tab);
 }
 
@@ -99,4 +110,5 @@ void	ft_check_valid(char *line)
 			ft_error();
 		i++;
 	}
+	ft_tabdel(&split);
 }

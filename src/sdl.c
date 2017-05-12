@@ -6,17 +6,17 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/09 13:05:47 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/10 16:13:57 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/12 16:11:59 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <wolf.h>
 
 void		ft_init_sdl(t_sdl *sdl)
-{
-	if((SDL_SetRelativeMouseMode(SDL_TRUE)) != 0)
-		ft_sdl_error();
+{	
 	if ((SDL_Init(SDL_INIT_VIDEO) || TTF_Init()) != 0)
+		ft_sdl_error();
+	if ((SDL_SetRelativeMouseMode(SDL_TRUE)) != 0)
 		ft_sdl_error();
 	if ((sdl->win = SDL_CreateWindow("Win", SDL_WINDOWPOS_CENTERED, \
 			SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN)) == NULL)
@@ -59,9 +59,9 @@ void		ft_aff(t_sdl *sdl, t_def def)
 	ft_draw_minimap(sdl, def);
 	SDL_RenderCopy(sdl->render, sdl->game[TMAP], NULL, &sdl->dst[DMAP]);
 	if (sdl->weapon == 1)
-		SDL_RenderCopy(sdl->render, sdl->game[TSHOTGUN], NULL, &sdl->dst[DSHOTGUN]);
-	else if (sdl->weapon == 2)
 		SDL_RenderCopy(sdl->render, sdl->game[TGUN], NULL, &sdl->dst[DGUN]);
+	else if (sdl->weapon == 2)
+		SDL_RenderCopy(sdl->render, sdl->game[TSHOTGUN], NULL, &sdl->dst[DSHOTGUN]);
 	SDL_RenderCopy(sdl->render, sdl->game[TWEAPONS], NULL, &sdl->dst[DWEAPONS]);
 	SDL_RenderCopy(sdl->render, sdl->game[TFPS], NULL, &sdl->dst[DFPS]);
 	SDL_RenderPresent(sdl->render);

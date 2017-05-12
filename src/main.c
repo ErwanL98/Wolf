@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 11:04:57 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/10 16:07:18 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/12 16:04:33 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ void	ft_game(t_sdl *sdl, char *map, int select)
 	SDL_RenderClear(sdl->render);
 	ft_inttabdel(&def.tab);
 	SDL_DestroyTexture(sdl->game[TMAP]);
+	SDL_DestroyTexture(sdl->game[TGUN]);
+	SDL_DestroyTexture(sdl->game[TSHOTGUN]);
+	SDL_DestroyTexture(sdl->game[TWEAPONS]);
 	SDL_DestroyTexture(sdl->game[TWALL]);
 	SDL_DestroyTexture(sdl->game[TFPS]);
 }

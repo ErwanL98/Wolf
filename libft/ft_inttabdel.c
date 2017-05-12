@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 14:24:02 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/04/20 14:27:14 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/12 13:36:48 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,11 @@ void	ft_inttabdel(int	***tab)
 	int		**new;
 	int		i;
 
+	new = NULL;
+	i = 0;
 	new = *tab;
-	if (new != NULL)
-	{
-		i = 0;
-		while (new[i])
-			free(new[i++]);
-		free(new);
-		*tab = NULL;
-	}
+	while (new[i])
+		free(new[i++]);
+	free(new);
+	*tab = NULL;
 }

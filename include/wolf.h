@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 11:03:15 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/10 15:54:46 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/12 15:11:12 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void				ft_check_error(char *av, t_parse *parse);
 void				ft_error(void);
 void				ft_error_file(void);
 void				ft_check_valid(char *line);
+int					**ft_assign(t_parse *parse);
 void				ft_check_error2(t_parse *parse);
 void				ft_sdl_error(void);
 void				ft_draw_saf(t_sdl *sdl);
