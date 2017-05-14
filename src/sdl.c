@@ -44,7 +44,7 @@ void		ft_init_saf(t_sdl *sdl)
 	sdl->menu[IMG] = ft_create_texture("./img/menu.bmp", sdl, 0);
 }
 
-void		ft_aff(t_sdl *sdl, t_def def)
+void		ft_aff(t_sdl *sdl, t_def *def)
 {
 	sdl->dst[DFLOOR].y = HEIGHT / 2 + sdl->y;
 	sdl->dst[DFLOOR].x = 0;
@@ -55,13 +55,21 @@ void		ft_aff(t_sdl *sdl, t_def def)
 	SDL_RenderCopy(sdl->render, sdl->game[TSKY], &sdl->src[SSKY], \
 														&sdl->dst[DSKY]);
 	SDL_RenderCopy(sdl->render, sdl->game[TFLOOR], NULL, &sdl->dst[DFLOOR]);
-	ft_loop(def, sdl);
-	ft_draw_minimap(sdl, def);
+	ft_loop(*def, sdl);
+	ft_draw_minimap(sdl, *def);
 	SDL_RenderCopy(sdl->render, sdl->game[TMAP], NULL, &sdl->dst[DMAP]);
-	if (sdl->weapon == 1)
-		SDL_RenderCopy(sdl->render, sdl->game[TGUN], NULL, &sdl->dst[DGUN]);
-	else if (sdl->weapon == 2)
-		SDL_RenderCopy(sdl->render, sdl->game[TSHOTGUN], NULL, &sdl->dst[DSHOTGUN]);
+	if (def->weapon == 1)
+	{
+		(def->fire == 0) ? SDL_RenderCopy(sdl->render, sdl->game[TGUN], NULL, \
+		&sdl->dst[DGUN]) : SDL_RenderCopy(sdl->render, sdl->game[TGUN2], NULL, &sdl->dst[DGUN]);
+		def->fire = (def->fire == 1) ? 0 : def->fire;
+	}
+	else if (def->weapon == 2)
+	{
+		(def->fire == 0) ? SDL_RenderCopy(sdl->render, sdl->game[TSHOTGUN], NULL, \
+		&sdl->dst[DSHOTGUN]) : SDL_RenderCopy(sdl->render, sdl->game[TSHOTGUN2], NULL, &sdl->dst[DSHOTGUN]);
+		def->fire = (def->fire == 1) ? 0 : def->fire;
+	}
 	SDL_RenderCopy(sdl->render, sdl->game[TWEAPONS], NULL, &sdl->dst[DWEAPONS]);
 	SDL_RenderCopy(sdl->render, sdl->game[TFPS], NULL, &sdl->dst[DFPS]);
 	SDL_RenderPresent(sdl->render);

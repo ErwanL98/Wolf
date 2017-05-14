@@ -66,7 +66,7 @@ void	ft_game(t_sdl *sdl, char *map, int select)
 		(select == 1) ? ft_init_42(&def) : ft_init_1(&def);
 	else if (select == 3)
 		ft_init_2(&def);
-	ft_aff(sdl, def);
+	ft_aff(sdl, &def);
 	while (sdl->keep_game == 1)
 	{
 		sdl->in.x_rel = 0;
@@ -76,7 +76,7 @@ void	ft_game(t_sdl *sdl, char *map, int select)
 		ft_fps(sdl, &def);
 		ft_is_key(sdl, &def);
 		ft_mouse1(sdl, &def);
-		ft_aff(sdl, def);
+		ft_aff(sdl, &def);
 		SDL_Delay(8);
 	}
 	SDL_RenderClear(sdl->render);

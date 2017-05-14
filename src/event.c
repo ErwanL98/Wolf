@@ -22,6 +22,10 @@ void	ft_event(t_sdl *sdl)
 			sdl->in.key[sdl->event_game.key.keysym.scancode] = 1;
 		else if (sdl->event_game.type == SDL_KEYUP)
 			sdl->in.key[sdl->event_game.key.keysym.scancode] = 0;
+		if (sdl->event_game.type == SDL_MOUSEBUTTONDOWN)
+			sdl->in.button[sdl->event_game.button.button] = 1;
+		else if (sdl->event_game.type == SDL_MOUSEBUTTONUP)
+			sdl->in.button[sdl->event_game.button.button] = 0;
 		if (sdl->event_game.type == SDL_MOUSEMOTION)
 		{
 			sdl->in.x_rel += sdl->event_game.motion.xrel;
@@ -35,9 +39,11 @@ void	ft_is_key(t_sdl *sdl, t_def *def)
 	if (sdl->in.key[SDL_SCANCODE_LSHIFT])
 		def->m_speed *= 1.5;
 	if (sdl->in.key[SDL_SCANCODE_1] && sdl->in.key[SDL_SCANCODE_2] == 0)
-		sdl->weapon = 1;
+		def->weapon = 1;
 	if (sdl->in.key[SDL_SCANCODE_2] && sdl->in.key[SDL_SCANCODE_1] == 0)
-		sdl->weapon = 2;
+		def->weapon = 2;
+	if (sdl->in.key[SDL_SCANCODE_SPACE] || sdl->in.button[SDL_BUTTON_LEFT])
+		def->fire = 1;
 	if (sdl->in.key[SDL_SCANCODE_W])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x + def->dir_x * \

@@ -26,7 +26,7 @@
 # define HEIGHT 768
 
 enum {IMG, MENU, TEXT};
-enum {TSKY, TFLOOR, TWALL, TMAP, TFPS, TSHOTGUN, TWEAPONS, TGUN};
+enum {TSKY, TFLOOR, TWALL, TMAP, TFPS, TSHOTGUN, TWEAPONS, TGUN, TGUN2, TSHOTGUN2};
 enum {TTF, TEXTURE};
 enum {DMAP, DTEXT, DFLOOR, DWALL, DSKY, DFPS, DWEAPONS, DGUN, DSHOTGUN}; 
 enum {SWALL, SSKY};
@@ -62,6 +62,8 @@ typedef struct		s_def
 	double			frame_time;
 	int				map_w;
 	int				map_h;
+	int				weapon;
+	int				fire;
 }					t_def;
 
 typedef struct		s_calc
@@ -98,6 +100,7 @@ typedef struct		s_input
 	char			key[SDL_NUM_SCANCODES];
 	int				x_rel;
 	int				y_rel;
+	char			button[8];
 }					t_input;
 
 typedef struct		s_sdl
@@ -108,7 +111,7 @@ typedef struct		s_sdl
 	SDL_Renderer	*render;
 	SDL_PixelFormat	*format;
 	SDL_Texture		*menu[3];
-	SDL_Texture		*game[8];
+	SDL_Texture		*game[10];
 	SDL_Surface		*load[2];
 	TTF_Font		*font;
 	TTF_Font		*font2;
@@ -122,7 +125,6 @@ typedef struct		s_sdl
 	int				width_sky;
 	SDL_Rect		dst[9];
 	SDL_Rect		src[2];
-	int				weapon;
 	t_input			in;
 }					t_sdl;
 
@@ -148,7 +150,7 @@ void				ft_event(t_sdl *sdl);
 void				ft_draw_minimap(t_sdl *sdl, t_def def);
 void				ft_init(t_def *def, t_sdl *sdl, t_parse *parse, \
 																	char *av);
-void				ft_aff(t_sdl *sdl, t_def def);
+void				ft_aff(t_sdl *sdl, t_def *def);
 void				ft_menu(t_sdl *sdl, int select);
 void				ft_text(t_sdl *sdl, int text, int select);
 void				ft_text_cases(t_sdl *sdl, int text, int select);
