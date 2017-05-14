@@ -37,12 +37,12 @@ void	ft_init_rect(t_sdl *sdl, t_def *def)
 	sdl->dst[DSKY].y = 0;
 	sdl->dst[DSKY].w = WIDTH;
 	sdl->dst[DSKY].h = HEIGHT;
-	sdl->dst[DSHOTGUN].x = WIDTH / 2 - 105;
-	sdl->dst[DSHOTGUN].y = HEIGHT - (sdl->dst[DSHOTGUN].h);
 	sdl->dst[DWEAPONS].x = WIDTH - sdl->dst[DWEAPONS].w;
 	sdl->dst[DWEAPONS].y = HEIGHT - sdl->dst[DWEAPONS].h;
 	sdl->dst[DGUN].x = WIDTH / 2 - 105;
 	sdl->dst[DGUN].y = HEIGHT - (sdl->dst[DGUN].h);
+	sdl->dst[DSHOTGUN].x = WIDTH / 2 - 105;
+	sdl->dst[DSHOTGUN].y = HEIGHT - (sdl->dst[DSHOTGUN].h);
 }
 
 void	ft_init_textures(t_sdl *sdl, t_def *def)

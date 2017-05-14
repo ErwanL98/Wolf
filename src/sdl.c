@@ -19,7 +19,7 @@ void		ft_init_sdl(t_sdl *sdl)
 	if ((SDL_SetRelativeMouseMode(SDL_TRUE)) != 0)
 		ft_sdl_error();
 	if ((sdl->win = SDL_CreateWindow("Win", SDL_WINDOWPOS_CENTERED, \
-			SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN)) == NULL)
+			SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_FULLSCREEN)) == NULL)
 		ft_sdl_error();
 	if ((sdl->render = SDL_CreateRenderer(sdl->win, -1, 0)) == NULL)
 		ft_sdl_error();
