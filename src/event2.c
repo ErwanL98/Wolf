@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 13:46:06 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/12 14:31:49 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/15 18:12:53 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_mouse1(t_sdl *sdl, t_def *def)
 					  def->plane_y * cos(def->r_speed * sdl->in.x_rel * 0.1 * M_PI / 180);
 		sdl->src[SSKY].x += (WIDTH / 66 * (def->r_speed * sdl->in.x_rel * 0.1));
 		if (sdl->src[SSKY].x < 0)
-			sdl->src[SSKY].x = sdl->width_sky - WIDTH;
+			sdl->src[SSKY].x = sdl->width_sky - (WIDTH * 2);
 	}
 	ft_mouse2(sdl, def);
 }
@@ -74,7 +74,7 @@ void	ft_mouse2(t_sdl *sdl, t_def *def)
 									sdl->in.x_rel * 0.1 * M_PI / 180);
 		sdl->src[SSKY].x += (WIDTH / 66 * (def->r_speed * sdl->in.x_rel * 0.1));
 		if (sdl->src[SSKY].x > (sdl->width_sky - WIDTH))
-			sdl->src[SSKY].x = 0;
+			sdl->src[SSKY].x = 1366;
 	}
 	if (sdl->in.y_rel < -1 && sdl->y <= 373)
 		sdl->y -= def->r_speed * sdl->in.y_rel * 1.7;

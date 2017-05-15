@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/09 13:05:47 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/12 16:11:59 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/15 18:16:21 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		ft_init_sdl(t_sdl *sdl)
 	if ((SDL_SetRelativeMouseMode(SDL_TRUE)) != 0)
 		ft_sdl_error();
 	if ((sdl->win = SDL_CreateWindow("Win", SDL_WINDOWPOS_CENTERED, \
-			SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_FULLSCREEN)) == NULL)
+			SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN)) == NULL)
 		ft_sdl_error();
 	if ((sdl->render = SDL_CreateRenderer(sdl->win, -1, 0)) == NULL)
 		ft_sdl_error();
@@ -61,13 +61,15 @@ void		ft_aff(t_sdl *sdl, t_def *def)
 	if (def->weapon == 1)
 	{
 		(def->fire == 0) ? SDL_RenderCopy(sdl->render, sdl->game[TGUN], NULL, \
-		&sdl->dst[DGUN]) : SDL_RenderCopy(sdl->render, sdl->game[TGUN2], NULL, &sdl->dst[DGUN]);
+			&sdl->dst[DGUN]) : SDL_RenderCopy(sdl->render, \
+				sdl->game[TGUN2], NULL, &sdl->dst[DGUN]);
 		def->fire = (def->fire == 1) ? 0 : def->fire;
 	}
 	else if (def->weapon == 2)
 	{
-		(def->fire == 0) ? SDL_RenderCopy(sdl->render, sdl->game[TSHOTGUN], NULL, \
-		&sdl->dst[DSHOTGUN]) : SDL_RenderCopy(sdl->render, sdl->game[TSHOTGUN2], NULL, &sdl->dst[DSHOTGUN]);
+		(def->fire == 0) ? SDL_RenderCopy(sdl->render, sdl->game[TSHOTGUN], \
+				NULL, &sdl->dst[DSHOTGUN]) : SDL_RenderCopy(sdl->render, \
+					sdl->game[TSHOTGUN2], NULL, &sdl->dst[DSHOTGUN]);
 		def->fire = (def->fire == 1) ? 0 : def->fire;
 	}
 	SDL_RenderCopy(sdl->render, sdl->game[TWEAPONS], NULL, &sdl->dst[DWEAPONS]);

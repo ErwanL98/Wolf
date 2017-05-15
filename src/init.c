@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 14:33:06 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/12 16:06:21 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/15 17:39:11 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_init_rect(t_sdl *sdl, t_def *def)
 	sdl->dst[DMAP].y = 0;
 	sdl->dst[DMAP].w = def->map_w;
 	sdl->dst[DMAP].h = def->map_h;
-	sdl->src[SSKY].x = 684;
+	sdl->src[SSKY].x = 1366;
 	sdl->src[SSKY].y = 0;
 	sdl->src[SSKY].w = WIDTH;
 	sdl->src[SSKY].h = HEIGHT;
@@ -43,10 +43,6 @@ void	ft_init_rect(t_sdl *sdl, t_def *def)
 	sdl->dst[DGUN].y = HEIGHT - (sdl->dst[DGUN].h);
 	sdl->dst[DSHOTGUN].x = WIDTH / 2 - 105;
 	sdl->dst[DSHOTGUN].y = HEIGHT - (sdl->dst[DSHOTGUN].h);
-//	sdl->dst[DGUN2].x = WIDTH / 2 - 105;
-//	sdl->dst[DGUN2].y = HEIGHT - (sdl->dst[DGUN2].h);
-//	sdl->dst[DSHOTGUN2].x = WIDTH / 2 - 105;
-//	sdl->dst[DSHOTGUN2].y = HEIGHT - (sdl->dst[DSHOTGUN2].h);
 }
 
 void	ft_init_textures(t_sdl *sdl, t_def *def)
@@ -56,6 +52,7 @@ void	ft_init_textures(t_sdl *sdl, t_def *def)
 									def->map_w, def->map_h)) == NULL)
 		ft_sdl_error();
 	sdl->game[TWALL] = ft_create_texture("./img/wall.bmp", sdl, 0);
+	sdl->game[TWALLB] = ft_create_texture("./img/wall2.bmp", sdl, 0);
 	sdl->game[TSHOTGUN] = ft_create_texture("./img/shotgun1.bmp", sdl, 1);
 	SDL_QueryTexture(sdl->game[TSHOTGUN], NULL, NULL, \
 			&sdl->dst[DSHOTGUN].w, &sdl->dst[DSHOTGUN].h);
@@ -66,15 +63,12 @@ void	ft_init_textures(t_sdl *sdl, t_def *def)
 	SDL_QueryTexture(sdl->game[TGUN], NULL, NULL, \
 			&sdl->dst[DGUN].w, &sdl->dst[DGUN].h);
 	sdl->game[TGUN2] = ft_create_texture("./img/gun2.bmp", sdl, 1);
-//	SDL_QueryTexture(sdl->game[TGUN2], NULL, NULL, \
-			&sdl->dst[DGUN2].w, &sdl->dst[DGUN2].h);
 	sdl->game[TSHOTGUN2] = ft_create_texture("./img/shotgun2.bmp", sdl, 1);
-//	SDL_QueryTexture(sdl->game[TSHOTGUN2], NULL, NULL, \
-			&sdl->dst[DSHOTGUN2].w, &sdl->dst[DSHOTGUN2].h);
 }
 
 void	ft_init(t_def *def, t_sdl *sdl, t_parse *parse,  char *av)
 {
+	sdl->wallbreak.breakable = 0;
 	def->weapon = 1;
 	def->fire = 0;
 	def->w_time = 0;

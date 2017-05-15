@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/31 15:36:03 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/10 16:13:35 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/15 16:47:23 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,22 @@ void	ft_is_key(t_sdl *sdl, t_def *def)
 	if (sdl->in.key[SDL_SCANCODE_2] && sdl->in.key[SDL_SCANCODE_1] == 0)
 		def->weapon = 2;
 	if (sdl->in.key[SDL_SCANCODE_SPACE] || sdl->in.button[SDL_BUTTON_LEFT])
+	{
 		def->fire = 1;
+		if (sdl->wallbreak.breakable == 1 && def->weapon == 2)
+		{
+			def->tab[sdl->wallbreak.pos_y][sdl->wallbreak.pos_x] = -1;
+			sdl->wallbreak.breakable = 0;
+			sdl->in.button[SDL_BUTTON_LEFT] = 0;
+		}
+	}
 	if (sdl->in.key[SDL_SCANCODE_W])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x + def->dir_x * \
-					def->m_speed)] == 0)
+					def->m_speed)] <= 0)
 			def->pos_x += def->dir_x * def->m_speed;
 		if (def->tab[(int)(def->pos_y + def->dir_y * \
-					def->m_speed)][(int)def->pos_x] == 0)
+					def->m_speed)][(int)def->pos_x] <= 0)
 			def->pos_y += def->dir_y * def->m_speed;
 	}
 	if (sdl->in.key[SDL_SCANCODE_LEFT])
@@ -67,7 +75,7 @@ void	ft_is_key(t_sdl *sdl, t_def *def)
 					  def->plane_y * cos(-def->r_speed * M_PI / 180);
 		sdl->src[SSKY].x -= (WIDTH / 66 * def->r_speed);
 		if (sdl->src[SSKY].x < 0)
-			sdl->src[SSKY].x = sdl->width_sky - WIDTH;
+			sdl->src[SSKY].x = sdl->width_sky - (WIDTH * 2);
 	}
 	ft_is_key2(sdl, def);
 }
@@ -77,10 +85,10 @@ void	ft_is_key2(t_sdl *sdl, t_def *def)
 	if (sdl->in.key[SDL_SCANCODE_S])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x - def->dir_x * \
-					def->m_speed)] == 0)
+					def->m_speed)] <= 0)
 			def->pos_x -= def->dir_x * def->m_speed;
 		if (def->tab[(int)(def->pos_y - def->dir_y * \
-					def->m_speed)][(int)def->pos_x] == 0)
+					def->m_speed)][(int)def->pos_x] <= 0)
 			def->pos_y -= def->dir_y * def->m_speed;
 	}
 	if (sdl->in.key[SDL_SCANCODE_RIGHT])
@@ -97,24 +105,24 @@ void	ft_is_key2(t_sdl *sdl, t_def *def)
 					  def->plane_y * cos(def->r_speed * M_PI / 180);
 		sdl->src[SSKY].x += (WIDTH / 66 * def->r_speed);
 		if (sdl->src[SSKY].x > (sdl->width_sky - WIDTH))
-			sdl->src[SSKY].x = 0;
+			sdl->src[SSKY].x = WIDTH;
 	}
 	if (sdl->in.key[SDL_SCANCODE_A])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x - def->plane_x * \
-												def->m_speed)] == 0)
+												def->m_speed)] <= 0)
 			def->pos_x -= def->plane_x * def->m_speed;
 		if (def->tab[(int)(def->pos_y - def->plane_y * \
-								def->m_speed)][(int)def->pos_x] == 0)
+								def->m_speed)][(int)def->pos_x] <= 0)
 			def->pos_y -= def->plane_y * def->m_speed;
 	}
 	if (sdl->in.key[SDL_SCANCODE_D])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x + def->plane_x * \
-												def->m_speed)] == 0)
+												def->m_speed)] <= 0)
 			def->pos_x += def->plane_x * def->m_speed;
 		if (def->tab[(int)(def->pos_y + def->plane_y * \
-								def->m_speed)][(int)def->pos_x] == 0)
+								def->m_speed)][(int)def->pos_x] <= 0)
 			def->pos_y += def->plane_y * def->m_speed;
 	}
 	if (sdl->in.key[SDL_SCANCODE_UP] && sdl->y <= 373)

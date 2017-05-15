@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/31 11:15:54 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/09 11:40:53 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/15 12:46:56 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ void	ft_loop(t_def def, t_sdl *sdl)
 		calc.ray_dir_x = def.dir_x + def.plane_x * calc.camera_x;
 		calc.ray_dir_y = def.dir_y + def.plane_y * calc.camera_x;
 		ft_check_wall(def, &calc);
-		ft_draw(x, calc, sdl);
+		ft_draw(x, calc, sdl, def);
 	}
 }

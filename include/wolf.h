@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 11:03:15 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/12 15:11:12 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/15 18:15:10 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 # define HEIGHT 768
 
 enum {IMG, MENU, TEXT};
-enum {TSKY, TFLOOR, TWALL, TMAP, TFPS, TSHOTGUN, TWEAPONS, TGUN, TGUN2, TSHOTGUN2};
+enum {TSKY, TFLOOR, TWALL, TMAP, TFPS, TSHOTGUN, TWEAPONS, TGUN, TGUN2, \
+														TSHOTGUN2, TWALLB};
 enum {TTF, TEXTURE};
 enum {DMAP, DTEXT, DFLOOR, DWALL, DSKY, DFPS, DWEAPONS, DGUN, DSHOTGUN}; 
 enum {SWALL, SSKY};
@@ -103,6 +104,13 @@ typedef struct		s_input
 	char			button[8];
 }					t_input;
 
+typedef struct		s_game
+{
+	int				pos_x;
+	int				pos_y;
+	int				breakable;
+}					t_game;
+
 typedef struct		s_sdl
 {
 	SDL_Window		*win;
@@ -111,7 +119,7 @@ typedef struct		s_sdl
 	SDL_Renderer	*render;
 	SDL_PixelFormat	*format;
 	SDL_Texture		*menu[3];
-	SDL_Texture		*game[10];
+	SDL_Texture		*game[11];
 	SDL_Surface		*load[2];
 	TTF_Font		*font;
 	TTF_Font		*font2;
@@ -126,6 +134,7 @@ typedef struct		s_sdl
 	SDL_Rect		dst[9];
 	SDL_Rect		src[2];
 	t_input			in;
+	t_game			wallbreak;
 }					t_sdl;
 
 
@@ -142,7 +151,7 @@ void				ft_loop(t_def def, t_sdl *sdl);
 void				ft_init_calc(t_calc *calc);
 void				ft_check_wall(t_def def, t_calc *calc);
 void				ft_set(t_calc *calc);
-void				ft_draw(int x, t_calc calc, t_sdl *sdl);
+void				ft_draw(int x, t_calc calc, t_sdl *sdl, t_def def);
 void				ft_is_key(t_sdl *sdl, t_def *def);
 void				ft_is_key2(t_sdl *sdl, t_def *def);
 void				ft_init_sdl(t_sdl *sdl);
@@ -169,5 +178,6 @@ void				ft_init_rect(t_sdl *sdl, t_def *def);
 SDL_Texture			*ft_create_texture(char *str, t_sdl *sdl, int mod);
 void				ft_fps(t_sdl *sdl, t_def *def);
 void				ft_init_textures(t_sdl *sdl, t_def *def);
+void				ft_freegame(t_sdl *sdl, t_def *def);
 
 #endif

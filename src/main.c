@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 11:04:57 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/12 16:04:33 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/15 18:15:20 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int		main(int ac, char **av)
 	{
 		ft_init_sdl(&sdl);
 		ft_draw_saf(&sdl);
+		//ft_game(&sdl, "./maps/42.map", 1);
 		ft_select(&sdl);
 	}
 	else
@@ -76,15 +77,11 @@ void	ft_game(t_sdl *sdl, char *map, int select)
 		ft_fps(sdl, &def);
 		ft_is_key(sdl, &def);
 		ft_mouse1(sdl, &def);
+		sdl->wallbreak.pos_x = 0;
+		sdl->wallbreak.pos_y = 0;
 		ft_aff(sdl, &def);
 		SDL_Delay(8);
 	}
 	SDL_RenderClear(sdl->render);
-	ft_inttabdel(&def.tab);
-	SDL_DestroyTexture(sdl->game[TMAP]);
-	SDL_DestroyTexture(sdl->game[TGUN]);
-	SDL_DestroyTexture(sdl->game[TSHOTGUN]);
-	SDL_DestroyTexture(sdl->game[TWEAPONS]);
-	SDL_DestroyTexture(sdl->game[TWALL]);
-	SDL_DestroyTexture(sdl->game[TFPS]);
+	ft_freegame(sdl, &def);
 }

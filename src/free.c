@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 14:14:30 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/12 15:21:45 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/15 18:15:42 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,16 @@ void	ft_free(t_sdl *sdl)
 	TTF_CloseFont(sdl->font2);
 	TTF_Quit();
 	SDL_Quit();
+}
+
+void	ft_freegame(t_sdl *sdl, t_def *def)
+{
+	ft_inttabdel(&def->tab);
+	SDL_DestroyTexture(sdl->game[TWALLB]);
+	SDL_DestroyTexture(sdl->game[TMAP]);
+	SDL_DestroyTexture(sdl->game[TGUN]);
+	SDL_DestroyTexture(sdl->game[TSHOTGUN]);
+	SDL_DestroyTexture(sdl->game[TWEAPONS]);
+	SDL_DestroyTexture(sdl->game[TWALL]);
+	SDL_DestroyTexture(sdl->game[TFPS]);
 }
