@@ -6,14 +6,14 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/09 13:05:47 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/15 18:16:21 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/16 17:54:04 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <wolf.h>
 
 void		ft_init_sdl(t_sdl *sdl)
-{	
+{
 	if ((SDL_Init(SDL_INIT_VIDEO) || TTF_Init()) != 0)
 		ft_sdl_error();
 	if ((SDL_SetRelativeMouseMode(SDL_TRUE)) != 0)
@@ -44,7 +44,7 @@ void		ft_init_saf(t_sdl *sdl)
 	sdl->menu[IMG] = ft_create_texture("./img/menu.bmp", sdl, 0);
 }
 
-void		ft_aff(t_sdl *sdl, t_def *def)
+void		ft_display(t_sdl *sdl, t_def *def)
 {
 	sdl->dst[DFLOOR].y = HEIGHT / 2 + sdl->y;
 	sdl->dst[DFLOOR].x = 0;
@@ -57,7 +57,15 @@ void		ft_aff(t_sdl *sdl, t_def *def)
 	SDL_RenderCopy(sdl->render, sdl->game[TFLOOR], NULL, &sdl->dst[DFLOOR]);
 	ft_loop(*def, sdl);
 	ft_draw_minimap(sdl, *def);
+	ft_display_guns(sdl, def);
 	SDL_RenderCopy(sdl->render, sdl->game[TMAP], NULL, &sdl->dst[DMAP]);
+	SDL_RenderCopy(sdl->render, sdl->game[TWEAPONS], NULL, &sdl->dst[DWEAPONS]);
+	SDL_RenderCopy(sdl->render, sdl->game[TFPS], NULL, &sdl->dst[DFPS]);
+	SDL_RenderPresent(sdl->render);
+}
+
+void		ft_display_guns(t_sdl *sdl, t_def *def)
+{
 	if (def->weapon == 1)
 	{
 		(def->fire == 0) ? SDL_RenderCopy(sdl->render, sdl->game[TGUN], NULL, \
@@ -72,9 +80,6 @@ void		ft_aff(t_sdl *sdl, t_def *def)
 					sdl->game[TSHOTGUN2], NULL, &sdl->dst[DSHOTGUN]);
 		def->fire = (def->fire == 1) ? 0 : def->fire;
 	}
-	SDL_RenderCopy(sdl->render, sdl->game[TWEAPONS], NULL, &sdl->dst[DWEAPONS]);
-	SDL_RenderCopy(sdl->render, sdl->game[TFPS], NULL, &sdl->dst[DFPS]);
-	SDL_RenderPresent(sdl->render);
 }
 
 SDL_Texture	*ft_create_texture(char *path, t_sdl *sdl, int mod)

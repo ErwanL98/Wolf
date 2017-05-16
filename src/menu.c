@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 14:27:11 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/15 18:06:31 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/16 15:44:42 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	ft_text_cases(t_sdl *sdl, int text, int select)
 						sdl->color[(select == 4) ? 1 : 0])) == NULL)
 			ft_sdl_error();
 	}
-
 }
 
 void	ft_text(t_sdl *sdl, int text, int select)

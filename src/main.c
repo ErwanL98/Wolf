@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 11:04:57 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/15 18:15:20 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/16 17:11:46 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_game(t_sdl *sdl, char *map, int select)
 		(select == 1) ? ft_init_42(&def) : ft_init_1(&def);
 	else if (select == 3)
 		ft_init_2(&def);
-	ft_aff(sdl, &def);
+	ft_display(sdl, &def);
 	while (sdl->keep_game == 1)
 	{
 		sdl->in.x_rel = 0;
@@ -75,13 +75,13 @@ void	ft_game(t_sdl *sdl, char *map, int select)
 		ft_event(sdl);
 		def.m_speed = 0.0375;
 		ft_fps(sdl, &def);
-		ft_is_key(sdl, &def);
+		ft_power(sdl, &def);
 		ft_mouse1(sdl, &def);
 		sdl->wallbreak.pos_x = 0;
 		sdl->wallbreak.pos_y = 0;
-		ft_aff(sdl, &def);
+		ft_display(sdl, &def);
 		SDL_Delay(8);
 	}
 	SDL_RenderClear(sdl->render);
-	ft_freegame(sdl, &def);
+	ft_freegame(sdl, &def, parse);
 }

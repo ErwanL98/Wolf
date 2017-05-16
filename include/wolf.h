@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 11:03:15 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/15 18:15:10 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/16 16:34:48 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,18 @@ enum {SWALL, SSKY};
 
 typedef struct		s_parse
 {
+	int				i;
+	char			*test;
 	int				fd;
 	char			*line;
 	int				width;
 	int				height;
 	int				nb;
+	int				count;
 	int				x;
 	int				y;
 	char			**split;
+	int				**tab;
 }					t_parse;
 
 typedef struct		s_def
@@ -138,13 +142,13 @@ typedef struct		s_sdl
 }					t_sdl;
 
 
-int					**ft_create_map(char *av, t_parse parse);
-void				ft_check_error(char *av, t_parse *parse);
+//int					**ft_create_map(char *av, t_parse parse);
+//void				ft_check_error(char *av, t_parse *parse);
 void				ft_error(void);
 void				ft_error_file(void);
-void				ft_check_valid(char *line);
-int					**ft_assign(t_parse *parse);
-void				ft_check_error2(t_parse *parse);
+//void				ft_check_valid(char *line);
+//int					**ft_assign(t_parse *parse);
+//void				ft_check_error2(t_parse *parse);
 void				ft_sdl_error(void);
 void				ft_draw_saf(t_sdl *sdl);
 void				ft_loop(t_def def, t_sdl *sdl);
@@ -152,14 +156,18 @@ void				ft_init_calc(t_calc *calc);
 void				ft_check_wall(t_def def, t_calc *calc);
 void				ft_set(t_calc *calc);
 void				ft_draw(int x, t_calc calc, t_sdl *sdl, t_def def);
-void				ft_is_key(t_sdl *sdl, t_def *def);
-void				ft_is_key2(t_sdl *sdl, t_def *def);
+void				ft_power(t_sdl *sdl, t_def *def);
+void				ft_move_bf(t_sdl *sdl, t_def *def);
+void				ft_move_rl(t_sdl *sdl, t_def *def);
+void				ft_cam_r(t_sdl *sdl, t_def *def);
+void				ft_cam_lud(t_sdl *sdl, t_def *def);
 void				ft_init_sdl(t_sdl *sdl);
 void				ft_event(t_sdl *sdl);
 void				ft_draw_minimap(t_sdl *sdl, t_def def);
 void				ft_init(t_def *def, t_sdl *sdl, t_parse *parse, \
 																	char *av);
-void				ft_aff(t_sdl *sdl, t_def *def);
+void				ft_display(t_sdl *sdl, t_def *def);
+void				ft_display_guns(t_sdl *sdl, t_def *def);
 void				ft_menu(t_sdl *sdl, int select);
 void				ft_text(t_sdl *sdl, int text, int select);
 void				ft_text_cases(t_sdl *sdl, int text, int select);
@@ -178,6 +186,10 @@ void				ft_init_rect(t_sdl *sdl, t_def *def);
 SDL_Texture			*ft_create_texture(char *str, t_sdl *sdl, int mod);
 void				ft_fps(t_sdl *sdl, t_def *def);
 void				ft_init_textures(t_sdl *sdl, t_def *def);
-void				ft_freegame(t_sdl *sdl, t_def *def);
+void				ft_freegame(t_sdl *sdl, t_def *def, t_parse parse);
+void				ft_check_map(char *map, t_parse *parse);
+void				ft_check_line(char *line, int *count);
+int					**ft_create_tab(char *map, t_parse parse);
+void				ft_test(char *map, t_parse parse);
 
 #endif

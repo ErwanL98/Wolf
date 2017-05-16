@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/31 15:36:03 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/15 16:47:23 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/16 15:46:51 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_event(t_sdl *sdl)
 	}
 }
 
-void	ft_is_key(t_sdl *sdl, t_def *def)
+void	ft_power(t_sdl *sdl, t_def *def)
 {
 	if (sdl->in.key[SDL_SCANCODE_LSHIFT])
 		def->m_speed *= 1.5;
@@ -52,6 +52,11 @@ void	ft_is_key(t_sdl *sdl, t_def *def)
 			sdl->in.button[SDL_BUTTON_LEFT] = 0;
 		}
 	}
+	ft_move_bf(sdl, def);
+}
+
+void	ft_move_bf(t_sdl *sdl, t_def *def)
+{
 	if (sdl->in.key[SDL_SCANCODE_W])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x + def->dir_x * \
@@ -61,27 +66,6 @@ void	ft_is_key(t_sdl *sdl, t_def *def)
 					def->m_speed)][(int)def->pos_x] <= 0)
 			def->pos_y += def->dir_y * def->m_speed;
 	}
-	if (sdl->in.key[SDL_SCANCODE_LEFT])
-	{
-		def->o_dir_x = def->dir_x;
-		def->dir_x = def->dir_x * cos(-def->r_speed * M_PI / 180) - \
-					def->dir_y * sin(-def->r_speed * M_PI / 180);
-		def->dir_y = def->o_dir_x * sin(-def->r_speed * M_PI / 180) + \
-					def->dir_y * cos(-def->r_speed * M_PI / 180);
-		def->o_plane_x = def->plane_x;
-		def->plane_x = def->plane_x * cos(-def->r_speed * M_PI / 180) - \
-					  def->plane_y * sin(-def->r_speed * M_PI / 180);
-		def->plane_y = def->o_plane_x * sin(-def->r_speed * M_PI / 180) + \
-					  def->plane_y * cos(-def->r_speed * M_PI / 180);
-		sdl->src[SSKY].x -= (WIDTH / 66 * def->r_speed);
-		if (sdl->src[SSKY].x < 0)
-			sdl->src[SSKY].x = sdl->width_sky - (WIDTH * 2);
-	}
-	ft_is_key2(sdl, def);
-}
-
-void	ft_is_key2(t_sdl *sdl, t_def *def)
-{
 	if (sdl->in.key[SDL_SCANCODE_S])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x - def->dir_x * \
@@ -91,22 +75,11 @@ void	ft_is_key2(t_sdl *sdl, t_def *def)
 					def->m_speed)][(int)def->pos_x] <= 0)
 			def->pos_y -= def->dir_y * def->m_speed;
 	}
-	if (sdl->in.key[SDL_SCANCODE_RIGHT])
-	{
-		def->o_dir_x = def->dir_x;
-		def->dir_x = def->dir_x * cos(def->r_speed * M_PI / 180) - \
-					def->dir_y * sin(def->r_speed * M_PI / 180);
-		def->dir_y = def->o_dir_x * sin(def->r_speed * M_PI / 180) + \
-					def->dir_y * cos(def->r_speed * M_PI / 180);
-		def->o_plane_x = def->plane_x;
-		def->plane_x = def->plane_x * cos(def->r_speed * M_PI / 180) - \
-					  def->plane_y * sin(def->r_speed * M_PI / 180);
-		def->plane_y = def->o_plane_x * sin(def->r_speed * M_PI / 180) + \
-					  def->plane_y * cos(def->r_speed * M_PI / 180);
-		sdl->src[SSKY].x += (WIDTH / 66 * def->r_speed);
-		if (sdl->src[SSKY].x > (sdl->width_sky - WIDTH))
-			sdl->src[SSKY].x = WIDTH;
-	}
+	ft_move_rl(sdl, def);
+}
+
+void	ft_move_rl(t_sdl *sdl, t_def *def)
+{
 	if (sdl->in.key[SDL_SCANCODE_A])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x - def->plane_x * \
@@ -124,6 +97,48 @@ void	ft_is_key2(t_sdl *sdl, t_def *def)
 		if (def->tab[(int)(def->pos_y + def->plane_y * \
 								def->m_speed)][(int)def->pos_x] <= 0)
 			def->pos_y += def->plane_y * def->m_speed;
+	}
+	ft_cam_r(sdl, def);
+}
+
+void	ft_cam_r(t_sdl *sdl, t_def *def)
+{
+	if (sdl->in.key[SDL_SCANCODE_RIGHT])
+	{
+		def->o_dir_x = def->dir_x;
+		def->dir_x = def->dir_x * cos(def->r_speed * M_PI / 180) - \
+					def->dir_y * sin(def->r_speed * M_PI / 180);
+		def->dir_y = def->o_dir_x * sin(def->r_speed * M_PI / 180) + \
+					def->dir_y * cos(def->r_speed * M_PI / 180);
+		def->o_plane_x = def->plane_x;
+		def->plane_x = def->plane_x * cos(def->r_speed * M_PI / 180) - \
+						def->plane_y * sin(def->r_speed * M_PI / 180);
+		def->plane_y = def->o_plane_x * sin(def->r_speed * M_PI / 180) + \
+						def->plane_y * cos(def->r_speed * M_PI / 180);
+		sdl->src[SSKY].x += (WIDTH / 66 * def->r_speed);
+		if (sdl->src[SSKY].x > (sdl->width_sky - WIDTH))
+			sdl->src[SSKY].x = WIDTH;
+	}
+	ft_cam_lud(sdl, def);
+}
+
+void	ft_cam_lud(t_sdl *sdl, t_def *def)
+{
+	if (sdl->in.key[SDL_SCANCODE_LEFT])
+	{
+		def->o_dir_x = def->dir_x;
+		def->dir_x = def->dir_x * cos(-def->r_speed * M_PI / 180) - \
+					def->dir_y * sin(-def->r_speed * M_PI / 180);
+		def->dir_y = def->o_dir_x * sin(-def->r_speed * M_PI / 180) + \
+					def->dir_y * cos(-def->r_speed * M_PI / 180);
+		def->o_plane_x = def->plane_x;
+		def->plane_x = def->plane_x * cos(-def->r_speed * M_PI / 180) - \
+						def->plane_y * sin(-def->r_speed * M_PI / 180);
+		def->plane_y = def->o_plane_x * sin(-def->r_speed * M_PI / 180) + \
+						def->plane_y * cos(-def->r_speed * M_PI / 180);
+		sdl->src[SSKY].x -= (WIDTH / 66 * def->r_speed);
+		if (sdl->src[SSKY].x < 0)
+			sdl->src[SSKY].x = sdl->width_sky - (WIDTH * 2);
 	}
 	if (sdl->in.key[SDL_SCANCODE_UP] && sdl->y <= 373)
 		sdl->y += 20;

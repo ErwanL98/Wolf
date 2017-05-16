@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 11:07:21 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/15 14:21:05 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/16 17:53:37 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	ft_init_2(t_def *def)
 {
 	def->o_time = 0;
 	def->time = 0;
-	def->pos_x = 8.5;
-	def->pos_y = 6.5;
-	def->dir_x = 0;
-	def->dir_y = -1;
-	def->plane_x = 0.66;
-	def->plane_y = 0;
+	def->pos_x = 4.5;
+	def->pos_y = 1.5;
+	def->dir_x = 1;
+	def->dir_y = 0;
+	def->plane_x = 0;
+	def->plane_y = 0.66;
 }

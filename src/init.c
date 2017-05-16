@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 14:33:06 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/15 17:39:11 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/16 16:48:44 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,15 @@ void	ft_init_textures(t_sdl *sdl, t_def *def)
 	sdl->game[TSHOTGUN2] = ft_create_texture("./img/shotgun2.bmp", sdl, 1);
 }
 
-void	ft_init(t_def *def, t_sdl *sdl, t_parse *parse,  char *av)
+void	ft_init(t_def *def, t_sdl *sdl, t_parse *parse, char *av)
 {
 	sdl->wallbreak.breakable = 0;
 	def->weapon = 1;
 	def->fire = 0;
 	def->w_time = 0;
 	sdl->keep_game = 1;
-	ft_check_error(av, parse);
-	def->tab = ft_create_map(av, *parse);
+	ft_check_map(av, parse);
+	def->tab = ft_create_tab(av, *parse);
 	def->map_w = parse->width * 14;
 	def->map_h = parse->height * 14;
 	ft_init_textures(sdl, def);

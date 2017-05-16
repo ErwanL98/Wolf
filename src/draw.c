@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/29 14:33:20 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/15 16:32:41 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/16 17:56:47 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ft_draw_minimap(t_sdl *sdl, t_def def)
 		{
 			if (def.tab[y / 14][x / 14] > 0 || def.tab[y / 14][x / 14] == -1)
 				sdl->pixels[x + (y * def.map_w)] = color[0];
-			else if (y / 14 == (int)def.pos_y && x / 14 == (int)def.pos_x)
+			if (y / 14 == (int)def.pos_y && x / 14 == (int)def.pos_x)
 				sdl->pixels[x + (y * def.map_w)] = color[2];
 			else if (def.tab[y / 14][x / 14] == 0)
 				sdl->pixels[x + (y * def.map_w)] = color[1];
