@@ -102,6 +102,6 @@ char				*ft_itoa_base(int value, int base);
 char				*ft_rgb_to_hex(t_rgb rgb);
 int					ft_rgb_to_dec(t_rgb rgb);
 void				ft_tabdel(char ***tab);
-void				ft_inttabdel(int ***tab);
+void				ft_inttabdel(int ***tab, int size);
 
 #endif

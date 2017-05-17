@@ -13,7 +13,7 @@
 #include <libft.h>
 #include <stdlib.h>
 
-void	ft_inttabdel(int	***tab)
+void	ft_inttabdel(int	***tab, int size)
 {
 	int		**new;
 	int		i;
@@ -21,7 +21,7 @@ void	ft_inttabdel(int	***tab)
 	new = NULL;
 	i = 0;
 	new = *tab;
-	while (new[i])
+	while (i < size)
 		free(new[i++]);
 	free(new);
 	*tab = NULL;
