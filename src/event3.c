@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 15:18:40 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/18 16:41:43 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/18 17:00:26 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_power(t_sdl *sdl, t_def *def)
 			sdl->in.button[SDL_BUTTON_LEFT] = 0;
 		}
 		else if ((WIDTH / 2 >= def->garg.f_x && WIDTH / 2 <= def->garg.l_x) && \
-				(def->garg.time >= 0.3 || def->garg.time == 0) && \
+				(def->garg.time >= 0.2 || def->garg.time == 0) && \
 				(sdl->dst[DGUN].y + 145 >= def->garg.rect.y && sdl->dst[DGUN].y\
 				+ 145 <= def->garg.rect.h + def->garg.rect.y))
 		{

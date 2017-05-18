@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/09 13:05:47 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/18 15:30:01 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/18 16:59:35 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		ft_init_sdl(t_sdl *sdl)
 		ft_sdl_error();
 	if ((SDL_SetRelativeMouseMode(SDL_TRUE)) != 0)
 		ft_sdl_error();
-	if ((sdl->win = SDL_CreateWindow("Win", SDL_WINDOWPOS_CENTERED, \
+	if ((sdl->win = SDL_CreateWindow("Wolf3D", SDL_WINDOWPOS_CENTERED, \
 			SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN)) == NULL)
 		ft_sdl_error();
 	if ((sdl->render = SDL_CreateRenderer(sdl->win, -1, 0)) == NULL)
