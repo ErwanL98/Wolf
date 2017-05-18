@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 14:33:06 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/16 16:48:44 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/18 15:21:24 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,19 @@ void	ft_init_rect(t_sdl *sdl, t_def *def)
 	sdl->dst[DGUN].y = HEIGHT - (sdl->dst[DGUN].h);
 	sdl->dst[DSHOTGUN].x = WIDTH / 2 - 105;
 	sdl->dst[DSHOTGUN].y = HEIGHT - (sdl->dst[DSHOTGUN].h);
+	sdl->dst[DLIFE].w = 200;
+	sdl->dst[DLIFE].h = 25;
 }
 
 void	ft_init_textures(t_sdl *sdl, t_def *def)
 {
 	if ((sdl->game[TMAP] = SDL_CreateTexture(sdl->render, \
-			SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, \
-									def->map_w, def->map_h)) == NULL)
+					SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, \
+					def->map_w, def->map_h)) == NULL)
 		ft_sdl_error();
 	sdl->game[TWALL] = ft_create_texture("./img/wall.bmp", sdl, 0);
 	sdl->game[TWALLB] = ft_create_texture("./img/wall2.bmp", sdl, 0);
+	sdl->game[GARG] = ft_create_texture("./img/garg.bmp", sdl, 1);
 	sdl->game[TSHOTGUN] = ft_create_texture("./img/shotgun1.bmp", sdl, 1);
 	SDL_QueryTexture(sdl->game[TSHOTGUN], NULL, NULL, \
 			&sdl->dst[DSHOTGUN].w, &sdl->dst[DSHOTGUN].h);
@@ -64,13 +67,22 @@ void	ft_init_textures(t_sdl *sdl, t_def *def)
 			&sdl->dst[DGUN].w, &sdl->dst[DGUN].h);
 	sdl->game[TGUN2] = ft_create_texture("./img/gun2.bmp", sdl, 1);
 	sdl->game[TSHOTGUN2] = ft_create_texture("./img/shotgun2.bmp", sdl, 1);
+	if ((sdl->game[TLIFE] = SDL_CreateTexture(sdl->render, \
+	SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, 200, 25)) == NULL)
+		ft_sdl_error();
 }
 
 void	ft_init(t_def *def, t_sdl *sdl, t_parse *parse, char *av)
 {
+	def->garg.disp_life = 0;
 	sdl->wallbreak.breakable = 0;
+	def->garg.life = 100;
 	def->weapon = 1;
 	def->fire = 0;
+	def->garg.disp = 0;
+	def->garg.l_x = 0;
+	def->garg.f_x = 0;
+	def->garg.dead = 0;
 	def->w_time = 0;
 	sdl->keep_game = 1;
 	ft_check_map(av, parse);

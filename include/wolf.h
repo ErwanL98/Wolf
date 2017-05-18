@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 11:03:15 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/16 16:34:48 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/18 16:46:14 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define WOLF_H
 
 # include <stdlib.h>
-# include <stdio.h>
 # include <libft.h>
 # include <fcntl.h>
 # include <get_next_line.h>
@@ -27,9 +26,9 @@
 
 enum {IMG, MENU, TEXT};
 enum {TSKY, TFLOOR, TWALL, TMAP, TFPS, TSHOTGUN, TWEAPONS, TGUN, TGUN2, \
-														TSHOTGUN2, TWALLB};
+	TSHOTGUN2, TWALLB, GARG, RGARG, TLIFE};
 enum {TTF, TEXTURE};
-enum {DMAP, DTEXT, DFLOOR, DWALL, DSKY, DFPS, DWEAPONS, DGUN, DSHOTGUN}; 
+enum {DMAP, DTEXT, DFLOOR, DWALL, DSKY, DFPS, DWEAPONS, DGUN, DSHOTGUN, DLIFE};
 enum {SWALL, SSKY};
 
 typedef struct		s_parse
@@ -47,6 +46,48 @@ typedef struct		s_parse
 	char			**split;
 	int				**tab;
 }					t_parse;
+
+typedef struct		s_calc
+{
+	double			camera_x;
+	double			ray_pos_x;
+	double			ray_pos_y;
+	double			ray_dir_x;
+	double			ray_dir_y;
+	int				map_x;
+	int				map_y;
+	double			s_dist_x;
+	double			s_dist_y;
+	double			d_dist_x;
+	double			d_dist_y;
+	int				step_x;
+	int				step_y;
+	int				hit;
+	int				side;
+	double			wall_dist;
+	int				test;
+}					t_calc;
+
+typedef	struct		s_garg
+{
+	double			pos_x;
+	double			pos_y;
+	double			test_x;
+	double			test_y;
+	int				i;
+	int				x;
+	int				f_x;
+	int				l_x;
+	int				dead;
+	SDL_Rect		rect;
+	SDL_Rect		drect;
+	int				disp;
+	double			dist;
+	t_calc			calc;
+	int				life;
+	int				disp_life;
+	double			time;
+}					t_garg;
 
 typedef struct		s_def
 {
@@ -69,28 +110,10 @@ typedef struct		s_def
 	int				map_h;
 	int				weapon;
 	int				fire;
+	t_garg			garg;
+	double			x1;
+	double			y1;
 }					t_def;
-
-typedef struct		s_calc
-{
-	double			camera_x;
-	double			ray_pos_x;
-	double			ray_pos_y;
-	double			ray_dir_x;
-	double			ray_dir_y;
-	int				map_x;
-	int				map_y;
-	double			s_dist_x;
-	double			s_dist_y;
-	double			d_dist_x;
-	double			d_dist_y;
-	int				step_x;
-	int				step_y;
-	int				hit;
-	int				side;
-	double			wall_dist;
-	int				test;
-}					t_calc;
 
 typedef struct		s_draw
 {
@@ -123,7 +146,7 @@ typedef struct		s_sdl
 	SDL_Renderer	*render;
 	SDL_PixelFormat	*format;
 	SDL_Texture		*menu[3];
-	SDL_Texture		*game[11];
+	SDL_Texture		*game[14];
 	SDL_Surface		*load[2];
 	TTF_Font		*font;
 	TTF_Font		*font2;
@@ -135,23 +158,17 @@ typedef struct		s_sdl
 	int				keep_game;
 	int				y;
 	int				width_sky;
-	SDL_Rect		dst[9];
+	SDL_Rect		dst[10];
 	SDL_Rect		src[2];
 	t_input			in;
 	t_game			wallbreak;
 }					t_sdl;
 
-
-//int					**ft_create_map(char *av, t_parse parse);
-//void				ft_check_error(char *av, t_parse *parse);
 void				ft_error(void);
 void				ft_error_file(void);
-//void				ft_check_valid(char *line);
-//int					**ft_assign(t_parse *parse);
-//void				ft_check_error2(t_parse *parse);
 void				ft_sdl_error(void);
 void				ft_draw_saf(t_sdl *sdl);
-void				ft_loop(t_def def, t_sdl *sdl);
+void				ft_loop(t_def *def, t_sdl *sdl);
 void				ft_init_calc(t_calc *calc);
 void				ft_check_wall(t_def def, t_calc *calc);
 void				ft_set(t_calc *calc);
@@ -165,7 +182,7 @@ void				ft_init_sdl(t_sdl *sdl);
 void				ft_event(t_sdl *sdl);
 void				ft_draw_minimap(t_sdl *sdl, t_def def);
 void				ft_init(t_def *def, t_sdl *sdl, t_parse *parse, \
-																	char *av);
+		char *av);
 void				ft_display(t_sdl *sdl, t_def *def);
 void				ft_display_guns(t_sdl *sdl, t_def *def);
 void				ft_menu(t_sdl *sdl, int select);
@@ -191,5 +208,16 @@ void				ft_check_map(char *map, t_parse *parse);
 void				ft_check_line(char *line, int *count);
 int					**ft_create_tab(char *map, t_parse parse);
 void				ft_test(char *map, t_parse parse);
+void				ft_disp_garg(t_def *def, t_sdl *sdl, t_calc calc);
+void				ft_move_l(t_sdl *sdl, t_def *def);
+void				ft_move_b(t_sdl *sdl, t_def *def);
+void				ft_move_f(t_sdl *sdl, t_def *def);
+void				ft_move_r(t_sdl *sdl, t_def *def);
+void				ft_init_garg(t_def *def, t_sdl *sdl);
+void				ft_init_draw(t_calc calc, t_sdl *sdl, t_draw *draw, \
+																t_def def);
+void				ft_draw_life(t_def def, t_sdl *sdl);
+void				ft_copy(t_sdl *sdl, t_def *def);
+void				ft_destroy_garg(t_def *def, t_sdl *sdl);
 
 #endif

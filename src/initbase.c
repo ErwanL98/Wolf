@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 11:07:21 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/16 17:53:37 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/18 16:33:53 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	ft_init_42(t_def *def)
 	def->dir_y = 0;
 	def->plane_x = 0;
 	def->plane_y = 0.66;
+	def->garg.pos_y = 7.5;
+	def->garg.pos_x = 3.5;
 }
 
 void	ft_init_1(t_def *def)
@@ -34,6 +36,8 @@ void	ft_init_1(t_def *def)
 	def->dir_y = 0;
 	def->plane_x = 0;
 	def->plane_y = 0.66;
+	def->garg.pos_y = 7.5;
+	def->garg.pos_x = 15.5;
 }
 
 void	ft_init_2(t_def *def)
@@ -46,4 +50,6 @@ void	ft_init_2(t_def *def)
 	def->dir_y = 0;
 	def->plane_x = 0;
 	def->plane_y = 0.66;
+	def->garg.pos_y = 1.5;
+	def->garg.pos_x = 15.5;
 }

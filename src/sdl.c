@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/09 13:05:47 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/16 17:54:04 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/18 15:30:01 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,20 @@ void		ft_display(t_sdl *sdl, t_def *def)
 	sdl->dst[DFLOOR].x = 0;
 	sdl->dst[DFLOOR].w = WIDTH;
 	sdl->dst[DFLOOR].h = HEIGHT * 2;
-	SDL_SetRenderDrawColor(sdl->render, 0, 0, 0, 255);
-	SDL_RenderClear(sdl->render);
-	SDL_RenderCopy(sdl->render, sdl->game[TSKY], &sdl->src[SSKY], \
-														&sdl->dst[DSKY]);
-	SDL_RenderCopy(sdl->render, sdl->game[TFLOOR], NULL, &sdl->dst[DFLOOR]);
-	ft_loop(*def, sdl);
-	ft_draw_minimap(sdl, *def);
+	ft_copy(sdl, def);
+	if (def->garg.disp == 1 && def->garg.dead == 0)
+	{
+		ft_disp_garg(def, sdl, def->garg.calc);
+		sdl->dst[DLIFE].y = def->garg.rect.y - 70;
+		if (def->garg.disp_life == 1)
+		{
+			ft_draw_life(*def, sdl);
+			SDL_RenderCopy(sdl->render, sdl->game[TLIFE], NULL, \
+														&sdl->dst[DLIFE]);
+		}
+		def->garg.disp_life = 0;
+	}
 	ft_display_guns(sdl, def);
-	SDL_RenderCopy(sdl->render, sdl->game[TMAP], NULL, &sdl->dst[DMAP]);
-	SDL_RenderCopy(sdl->render, sdl->game[TWEAPONS], NULL, &sdl->dst[DWEAPONS]);
-	SDL_RenderCopy(sdl->render, sdl->game[TFPS], NULL, &sdl->dst[DFPS]);
 	SDL_RenderPresent(sdl->render);
 }
 

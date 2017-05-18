@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 11:52:59 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/04/20 14:20:56 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/16 15:49:33 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_tabdel(char ***tab)
 	{
 		i = 0;
 		while (new[i])
-			ft_strdel(&new[i++]);
+			ft_strdel(&(new[i++]));
 		free(new);
 		*tab = NULL;
 	}

@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/31 11:15:54 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/15 12:46:56 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/18 14:49:15 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,31 @@ void	ft_set(t_calc *calc)
 	}
 }
 
-void	ft_loop(t_def def, t_sdl *sdl)
+void	ft_loop(t_def *def, t_sdl *sdl)
 {
 	int		x;
 	t_calc	calc;
 
 	x = -1;
+	def->garg.disp = 0;
 	while (++x < WIDTH)
 	{
 		calc.camera_x = 2 * x / (double)WIDTH - 1;
-		calc.ray_pos_x = def.pos_x;
-		calc.ray_pos_y = def.pos_y;
-		calc.ray_dir_x = def.dir_x + def.plane_x * calc.camera_x;
-		calc.ray_dir_y = def.dir_y + def.plane_y * calc.camera_x;
-		ft_check_wall(def, &calc);
-		ft_draw(x, calc, sdl, def);
+		calc.ray_pos_x = def->pos_x;
+		calc.ray_pos_y = def->pos_y;
+		calc.ray_dir_x = def->dir_x + def->plane_x * calc.camera_x;
+		calc.ray_dir_y = def->dir_y + def->plane_y * calc.camera_x;
+		ft_check_wall(*def, &calc);
+		def->x1 = (def->garg.pos_x - def->pos_x);
+		def->y1 = (def->garg.pos_y - def->pos_y);
+		if (def->x1 * calc.ray_dir_y - def->y1 * calc.ray_dir_x > -0.01 && \
+				def->x1 * calc.ray_dir_y - def->y1 * calc.ray_dir_x < 0.01)
+		{
+			def->garg.x = x;
+			if (def->x1 / calc.ray_dir_x > 0 && def->y1 / calc.ray_dir_y > 0)
+				def->garg.disp = 1;
+		}
+		ft_draw(x, calc, sdl, *def);
+		def->garg.calc = calc;
 	}
 }

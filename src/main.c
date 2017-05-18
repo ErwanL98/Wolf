@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 11:04:57 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/16 17:11:46 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/18 14:07:26 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int		main(int ac, char **av)
 	{
 		ft_init_sdl(&sdl);
 		ft_draw_saf(&sdl);
-		//ft_game(&sdl, "./maps/42.map", 1);
 		ft_select(&sdl);
 	}
 	else
@@ -38,6 +37,7 @@ void	ft_fps(t_sdl *sdl, t_def *def)
 	def->time = SDL_GetTicks();
 	def->frame_time = (def->time - def->o_time) / 1000;
 	def->w_time += def->frame_time;
+	def->garg.time += def->frame_time;
 	if (def->w_time == 0 || def->w_time > 0.2)
 	{
 		fps = ft_freestrjoin(ft_itoa((int)(1 / def->frame_time)), " FPS", 1);

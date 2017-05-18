@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 14:14:30 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/16 16:21:19 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/18 16:46:41 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	ft_free(t_sdl *sdl)
 void	ft_freegame(t_sdl *sdl, t_def *def, t_parse parse)
 {
 	ft_inttabdel(&def->tab, parse.height);
+	SDL_DestroyTexture(sdl->game[GARG]);
+	SDL_DestroyTexture(sdl->game[TLIFE]);
 	SDL_DestroyTexture(sdl->game[TWALLB]);
 	SDL_DestroyTexture(sdl->game[TMAP]);
 	SDL_DestroyTexture(sdl->game[TGUN]);

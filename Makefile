@@ -6,7 +6,7 @@
 #    By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 12:54:42 by ele-cren          #+#    #+#              #
-#    Updated: 2017/05/18 10:37:41 by ele-cren         ###   ########.fr        #
+#    Updated: 2017/05/18 15:27:06 by ele-cren         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ CC = gcc
 NAME = wolf3d
 
 SRC = src/calc.c src/main.c src/draw.c src/check.c src/error.c src/event.c \
-	  src/init.c src/menu.c src/sdl.c src/initbase.c src/event2.c src/free.c
+	  src/init.c src/menu.c src/sdl.c src/initbase.c src/event2.c src/free.c \
+	  src/garg.c src/event3.c src/sdl2.c
 
 OBJ = $(patsubst src/%.c, obj/%.o, $(SRC))
 

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/31 15:36:03 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/16 15:46:51 by ele-cren         ###   ########.fr       */
+/*   Created: 2017/05/18 13:49:31 by ele-cren          #+#    #+#             */
+/*   Updated: 2017/05/18 15:20:03 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,116 +34,108 @@ void	ft_event(t_sdl *sdl)
 	}
 }
 
-void	ft_power(t_sdl *sdl, t_def *def)
+void	ft_move_f(t_sdl *sdl, t_def *def)
 {
-	if (sdl->in.key[SDL_SCANCODE_LSHIFT])
-		def->m_speed *= 1.5;
-	if (sdl->in.key[SDL_SCANCODE_1] && sdl->in.key[SDL_SCANCODE_2] == 0)
-		def->weapon = 1;
-	if (sdl->in.key[SDL_SCANCODE_2] && sdl->in.key[SDL_SCANCODE_1] == 0)
-		def->weapon = 2;
-	if (sdl->in.key[SDL_SCANCODE_SPACE] || sdl->in.button[SDL_BUTTON_LEFT])
-	{
-		def->fire = 1;
-		if (sdl->wallbreak.breakable == 1 && def->weapon == 2)
-		{
-			def->tab[sdl->wallbreak.pos_y][sdl->wallbreak.pos_x] = -1;
-			sdl->wallbreak.breakable = 0;
-			sdl->in.button[SDL_BUTTON_LEFT] = 0;
-		}
-	}
-	ft_move_bf(sdl, def);
-}
-
-void	ft_move_bf(t_sdl *sdl, t_def *def)
-{
+	def->garg.test_x = def->pos_x;
+	def->garg.test_y = def->pos_y;
 	if (sdl->in.key[SDL_SCANCODE_W])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x + def->dir_x * \
 					def->m_speed)] <= 0)
-			def->pos_x += def->dir_x * def->m_speed;
+		{
+			def->garg.test_x = def->pos_x + def->dir_x * def->m_speed;
+			def->garg.dist = sqrt(pow(def->garg.pos_x - def->garg.test_x, 2) + \
+					pow(def->garg.pos_y - def->garg.test_y, 2));
+			if (def->garg.dist > 0.2)
+				def->pos_x += def->dir_x * def->m_speed;
+		}
 		if (def->tab[(int)(def->pos_y + def->dir_y * \
 					def->m_speed)][(int)def->pos_x] <= 0)
-			def->pos_y += def->dir_y * def->m_speed;
+		{
+			def->garg.test_y = def->pos_y + def->dir_y * def->m_speed;
+			def->garg.dist = sqrt(pow(def->garg.pos_x - def->garg.test_x, 2) + \
+					pow(def->garg.pos_y - def->garg.test_y, 2));
+			if (def->garg.dist > 0.2)
+				def->pos_y += def->dir_y * def->m_speed;
+		}
 	}
+	ft_move_b(sdl, def);
+}
+
+void	ft_move_b(t_sdl *sdl, t_def *def)
+{
 	if (sdl->in.key[SDL_SCANCODE_S])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x - def->dir_x * \
-					def->m_speed)] <= 0)
-			def->pos_x -= def->dir_x * def->m_speed;
+				def->m_speed)] <= 0)
+		{
+			def->garg.test_x = def->pos_x - def->dir_x * def->m_speed;
+			def->garg.dist = sqrt(pow(def->garg.pos_x - def->garg.test_x, 2) + \
+					pow(def->garg.pos_y - def->garg.test_y, 2));
+			if (def->garg.dist > 0.2)
+				def->pos_x -= def->dir_x * def->m_speed;
+		}
 		if (def->tab[(int)(def->pos_y - def->dir_y * \
 					def->m_speed)][(int)def->pos_x] <= 0)
-			def->pos_y -= def->dir_y * def->m_speed;
+		{
+			def->garg.test_y = def->pos_y - def->dir_y * def->m_speed;
+			def->garg.dist = sqrt(pow(def->garg.pos_x - def->garg.test_x, 2) + \
+					pow(def->garg.pos_y - def->garg.test_y, 2));
+			if (def->garg.dist > 0.2)
+				def->pos_y -= def->dir_y * def->m_speed;
+		}
 	}
-	ft_move_rl(sdl, def);
+	ft_move_l(sdl, def);
 }
 
-void	ft_move_rl(t_sdl *sdl, t_def *def)
+void	ft_move_l(t_sdl *sdl, t_def *def)
 {
 	if (sdl->in.key[SDL_SCANCODE_A])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x - def->plane_x * \
-												def->m_speed)] <= 0)
-			def->pos_x -= def->plane_x * def->m_speed;
+					def->m_speed)] <= 0)
+		{
+			def->garg.test_x = def->pos_x - def->plane_x * def->m_speed;
+			def->garg.dist = sqrt(pow(def->garg.pos_x - def->garg.test_x, 2) + \
+					pow(def->garg.pos_y - def->garg.test_y, 2));
+			if (def->garg.dist > 0.2)
+				def->pos_x -= def->plane_x * def->m_speed;
+		}
 		if (def->tab[(int)(def->pos_y - def->plane_y * \
-								def->m_speed)][(int)def->pos_x] <= 0)
-			def->pos_y -= def->plane_y * def->m_speed;
+					def->m_speed)][(int)def->pos_x] <= 0)
+		{
+			def->garg.test_y = def->pos_x - def->plane_y * def->m_speed;
+			def->garg.dist = sqrt(pow(def->garg.pos_x - def->garg.test_x, 2) + \
+					pow(def->garg.pos_y - def->garg.test_y, 2));
+			if (def->garg.dist > 0.2)
+				def->pos_y -= def->plane_y * def->m_speed;
+		}
 	}
+	ft_move_r(sdl, def);
+}
+
+void	ft_move_r(t_sdl *sdl, t_def *def)
+{
 	if (sdl->in.key[SDL_SCANCODE_D])
 	{
 		if (def->tab[(int)def->pos_y][(int)(def->pos_x + def->plane_x * \
-												def->m_speed)] <= 0)
-			def->pos_x += def->plane_x * def->m_speed;
+					def->m_speed)] <= 0)
+		{
+			def->garg.test_x = def->pos_x + def->plane_x * def->m_speed;
+			def->garg.dist = sqrt(pow(def->garg.pos_x - def->garg.test_x, 2) + \
+					pow(def->garg.pos_y - def->garg.test_y, 2));
+			if (def->garg.dist > 0.2)
+				def->pos_x += def->plane_x * def->m_speed;
+		}
 		if (def->tab[(int)(def->pos_y + def->plane_y * \
-								def->m_speed)][(int)def->pos_x] <= 0)
-			def->pos_y += def->plane_y * def->m_speed;
+					def->m_speed)][(int)def->pos_x] <= 0)
+		{
+			def->garg.test_y = def->pos_x + def->plane_y * def->m_speed;
+			def->garg.dist = sqrt(pow(def->garg.pos_x - def->garg.test_x, 2) + \
+					pow(def->garg.pos_y - def->garg.test_y, 2));
+			if (def->garg.dist > 0.2)
+				def->pos_y += def->plane_y * def->m_speed;
+		}
 	}
 	ft_cam_r(sdl, def);
-}
-
-void	ft_cam_r(t_sdl *sdl, t_def *def)
-{
-	if (sdl->in.key[SDL_SCANCODE_RIGHT])
-	{
-		def->o_dir_x = def->dir_x;
-		def->dir_x = def->dir_x * cos(def->r_speed * M_PI / 180) - \
-					def->dir_y * sin(def->r_speed * M_PI / 180);
-		def->dir_y = def->o_dir_x * sin(def->r_speed * M_PI / 180) + \
-					def->dir_y * cos(def->r_speed * M_PI / 180);
-		def->o_plane_x = def->plane_x;
-		def->plane_x = def->plane_x * cos(def->r_speed * M_PI / 180) - \
-						def->plane_y * sin(def->r_speed * M_PI / 180);
-		def->plane_y = def->o_plane_x * sin(def->r_speed * M_PI / 180) + \
-						def->plane_y * cos(def->r_speed * M_PI / 180);
-		sdl->src[SSKY].x += (WIDTH / 66 * def->r_speed);
-		if (sdl->src[SSKY].x > (sdl->width_sky - WIDTH))
-			sdl->src[SSKY].x = WIDTH;
-	}
-	ft_cam_lud(sdl, def);
-}
-
-void	ft_cam_lud(t_sdl *sdl, t_def *def)
-{
-	if (sdl->in.key[SDL_SCANCODE_LEFT])
-	{
-		def->o_dir_x = def->dir_x;
-		def->dir_x = def->dir_x * cos(-def->r_speed * M_PI / 180) - \
-					def->dir_y * sin(-def->r_speed * M_PI / 180);
-		def->dir_y = def->o_dir_x * sin(-def->r_speed * M_PI / 180) + \
-					def->dir_y * cos(-def->r_speed * M_PI / 180);
-		def->o_plane_x = def->plane_x;
-		def->plane_x = def->plane_x * cos(-def->r_speed * M_PI / 180) - \
-						def->plane_y * sin(-def->r_speed * M_PI / 180);
-		def->plane_y = def->o_plane_x * sin(-def->r_speed * M_PI / 180) + \
-						def->plane_y * cos(-def->r_speed * M_PI / 180);
-		sdl->src[SSKY].x -= (WIDTH / 66 * def->r_speed);
-		if (sdl->src[SSKY].x < 0)
-			sdl->src[SSKY].x = sdl->width_sky - (WIDTH * 2);
-	}
-	if (sdl->in.key[SDL_SCANCODE_UP] && sdl->y <= 373)
-		sdl->y += 20;
-	if (sdl->in.key[SDL_SCANCODE_DOWN] && sdl->y >= -600)
-		sdl->y -= 20;
-	if (sdl->in.key[SDL_SCANCODE_ESCAPE])
-		sdl->keep_game = 0;
 }
