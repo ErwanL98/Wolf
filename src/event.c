@@ -6,7 +6,7 @@
 /*   By: ele-cren <ele-cren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 13:49:31 by ele-cren          #+#    #+#             */
-/*   Updated: 2017/05/18 15:20:03 by ele-cren         ###   ########.fr       */
+/*   Updated: 2017/05/18 17:28:37 by ele-cren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void	ft_move_b(t_sdl *sdl, t_def *def)
 				def->pos_y -= def->dir_y * def->m_speed;
 		}
 	}
+	def->garg.pos_x = (def->garg.dead == 1) ? 0 : def->garg.pos_x;
+	def->garg.pos_y = (def->garg.dead == 1) ? 0 : def->garg.pos_y;
 	ft_move_l(sdl, def);
 }
 
